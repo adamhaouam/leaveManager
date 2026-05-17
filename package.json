@@ -10,8 +10,12 @@
   "devDependencies": {
     "chai": "^5.1.2",
     "concurrently": "^7.0.0",
+    "express": "^5.2.1",
     "mocha": "^11.0.1"
   },
   "author": "Task Manager Team",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "mongodb": "^7.2.0"
+  }
 }
