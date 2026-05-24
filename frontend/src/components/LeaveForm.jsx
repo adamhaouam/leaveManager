@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import axiosInstance from '../axiosConfig';
+import LEAVE_TYPES from '../constants/leaveTypes';
 
 const LeaveRequestForm = ({ leaveRequests, setLeaveRequests, editingLeaveRequest, setEditingLeaveRequest }) => {
   const { user } = useAuth();
@@ -43,13 +44,20 @@ const LeaveRequestForm = ({ leaveRequests, setLeaveRequests, editingLeaveRequest
   return (
     <form onSubmit={handleSubmit} className="bg-white p-6 shadow-md rounded mb-6">
       <h1 className="text-2xl font-bold mb-4">{editingLeaveRequest ? 'Edit Leave Request' : 'Add Leave Request'}</h1>
-      <input
-        type="text"
-        placeholder="Leave Type"
+
+      <select
         value={formData.leaveType}
         onChange={(e) => setFormData({ ...formData, leaveType: e.target.value })}
         className="w-full mb-4 p-2 border rounded"
-      />
+      >
+        <option disabled selected hidden value="">Select Leave Type</option>
+        {LEAVE_TYPES.map((type) => (
+          <option key={type.id} value={type.id}>
+            {type.label}
+          </option>
+        ))}
+      </select>
+      
       <input
         required
         type="date"
