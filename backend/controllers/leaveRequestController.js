@@ -63,4 +63,4 @@ const reviewLeaveRequest = async (req, res) => {
 };
 
 
-module.exports = { getLeaveRequests, addLeaveRequest, updateLeaveRequest, deleteLeaveRequest };
+module.exports = { getLeaveRequests, addLeaveRequest, updateLeaveRequest, deleteLeaveRequest, reviewLeaveRequest };
