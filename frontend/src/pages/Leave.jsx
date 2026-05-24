@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axiosInstance from '../axiosConfig';
 //import TaskForm from '../components/TaskForm';
 import LeaveRequestForm from '../components/LeaveForm';
+import LeaveRequestList from '../components/LeaveRequestList';
 //import TaskList from '../components/TaskList';
 import { useAuth } from '../context/AuthContext';
 
@@ -34,7 +35,7 @@ const LeaveRequests = () => {
         setEditingLeaveRequest={setEditingLeaveRequest}
       />
 
-
+    <LeaveRequestList leaveRequests={leaveRequests} setLeaveRequests={setLeaveRequests} setEditingLeaveRequest={setEditingLeaveRequest} />  
     </div>
   );
 };

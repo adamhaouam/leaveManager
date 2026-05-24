@@ -5,13 +5,13 @@ import axiosInstance from '../axiosConfig';
 const LeaveRequestForm = ({ leaveRequests, setLeaveRequests, editingLeaveRequest, setEditingLeaveRequest }) => {
   const { user } = useAuth();
   const [formData, setFormData] = useState({ leaveType: '', startDate: '', endDate: '', reason: '' });
-
+  const dateConvert = (isoString) => isoString ? isoString.slice(0,10) : ''
   useEffect(() => {
     if (editingLeaveRequest) {
       setFormData({
         leaveType: editingLeaveRequest.leaveType,
-        startDate: editingLeaveRequest.startDate,
-        endDate: editingLeaveRequest.endDate,
+        startDate: dateConvert(editingLeaveRequest.startDate),
+        endDate: dateConvert(editingLeaveRequest.endDate),
         reason: editingLeaveRequest.reason,
       });
     } else {
