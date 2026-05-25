@@ -12,6 +12,14 @@ const getLeaveRequests = async (req, res) => {
 const addLeaveRequest = async (req, res) => {
     const { leaveType, startDate, endDate, reason } = req.body;
     try {
+        const checkConflict = await LeaveRequest.findOne({
+            userId: req.user.id,   
+            startDate: { $lt: new Date(endDate) },
+            endDate: { $gt: new Date(startDate) },
+        });
+        if (checkConflict) {
+            return res.status(409).json({ message: 'Leave request conflicts with an existing requested leave.' });
+        }
         const leaveRequest = await LeaveRequest.create({ userId: req.user.id, leaveType, startDate, endDate, reason });
         res.status(201).json(leaveRequest);
     } catch (error) {
@@ -22,13 +30,22 @@ const addLeaveRequest = async (req, res) => {
 const updateLeaveRequest = async (req, res) => {
     const { leaveType, startDate, endDate, reason } = req.body;
     try {
+        const checkConflict = await LeaveRequest.findOne({
+            _id: { $ne: req.params.id }, // Exclude current request
+            userId: req.user.id,   
+            startDate: { $lt: new Date(endDate) },
+            endDate: { $gt: new Date(startDate) },
+        });
+        if (checkConflict) {
+            return res.status(409).json({ message: 'Leave request conflicts with an existing requested leave.' });
+        }
         const leaveRequest = await LeaveRequest.findById(req.params.id);
         if (!leaveRequest) return res.status(404).json({ message: 'Leave request not found' });
         
         leaveRequest.leaveType = leaveType || leaveRequest.leaveType;
         leaveRequest.startDate = startDate || leaveRequest.startDate;
         leaveRequest.endDate = endDate || leaveRequest.endDate;
-        leaveRequest.reason = reason || leaveRequest.reason;
+        leaveRequest.reason = reason;
 
         const updatedLeaveRequest = await leaveRequest.save();
         res.json(updatedLeaveRequest);
@@ -61,6 +78,8 @@ const reviewLeaveRequest = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+
 
 
 module.exports = { getLeaveRequests, addLeaveRequest, updateLeaveRequest, deleteLeaveRequest, reviewLeaveRequest };
