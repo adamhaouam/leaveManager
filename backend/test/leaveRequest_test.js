@@ -87,17 +87,6 @@ describe('AddLeaveRequest Function Test', () => {
 
 
   it('should return 409 if containing conflicting dates', async () => {
-    // Mock leave request data
-    const existingLeaveRequest = {
-      _id: new mongoose.Types.ObjectId(),
-      leaveType: "annual",
-      startDate: "2025-12-01",
-      endDate: "2025-12-10",
-      reason: "Family trip",
-    };
-
-    
-
     //Stub LeaveRequest.findOne to return null (no conflict)
     const findOneStub = sinon.stub(LeaveRequest, 'findOne').resolves(true);
 
@@ -115,10 +104,9 @@ describe('AddLeaveRequest Function Test', () => {
 
     // Call function
     await addLeaveRequest(req, res);
-
     // Assertions
     expect(res.status.calledWith(409)).to.be.true;
-    expect(res.json.calledWithMatch({ message: 'Leave request conflicts with an existing approved leave.' })).to.be.true;
+    expect(res.json.calledWithMatch({ message: 'Leave request conflicts with an existing requested leave.' })).to.be.true;
 
     // Restore stubbed methods
     findOneStub.restore();
@@ -145,9 +133,13 @@ describe('Update Function Test', () => {
     // Stub LeaveRequest.findById to return mock leave request
     const findByIdStub = sinon.stub(LeaveRequest, 'findById').resolves(existingLeaveRequest);
 
+    //Stub LeaveRequest.findOne to return null (no conflict)
+    const findOneStub = sinon.stub(LeaveRequest, 'findOne').resolves(null);
+
     // Mock request & response
     const req = {
       params: { id: leaveRequestId },
+      user: { id: new mongoose.Types.ObjectId() },
       body: { startDate: "2026-12-01", endDate: "2026-12-15" } // Update end date
     };
     const res = {
@@ -167,14 +159,17 @@ describe('Update Function Test', () => {
 
     // Restore stubbed methods
     findByIdStub.restore();
+    findOneStub.restore();
   });
 
 
 
   it('should return 404 if leave request is not found', async () => {
     const findByIdStub = sinon.stub(LeaveRequest, 'findById').resolves(null);
+    //Stub LeaveRequest.findOne to return null (no conflict)
+    const findOneStub = sinon.stub(LeaveRequest, 'findOne').resolves(null);
 
-    const req = { params: { id: new mongoose.Types.ObjectId() }, body: {} };
+    const req = { params: { id: new mongoose.Types.ObjectId() }, user: { id: new mongoose.Types.ObjectId() }, body: {} };
     const res = {
       status: sinon.stub().returnsThis(),
       json: sinon.spy()
@@ -186,12 +181,16 @@ describe('Update Function Test', () => {
     expect(res.json.calledWith({ message: 'Leave request not found' })).to.be.true;
 
     findByIdStub.restore();
+    findOneStub.restore();
   });
+
 
   it('should return 500 on error', async () => {
     const findByIdStub = sinon.stub(LeaveRequest, 'findById').throws(new Error('DB Error'));
+    //Stub LeaveRequest.findOne to return null (no conflict)
+    const findOneStub = sinon.stub(LeaveRequest, 'findOne').resolves(null);
 
-    const req = { params: { id: new mongoose.Types.ObjectId() }, body: {} };
+    const req = { params: { id: new mongoose.Types.ObjectId() }, user: { id: new mongoose.Types.ObjectId() }, body: {} };
     const res = {
       status: sinon.stub().returnsThis(),
       json: sinon.spy()
@@ -203,6 +202,7 @@ describe('Update Function Test', () => {
     expect(res.json.called).to.be.true;
 
     findByIdStub.restore();
+    findOneStub.restore();
   });
 
 });
@@ -273,7 +273,7 @@ describe('DeleteLeaveRequest Function Test', () => {
 
   it('should delete a leave request successfully', async () => {
     // Mock request data
-    const req = { params: { id: new mongoose.Types.ObjectId().toString() } };
+    const req = { params: { id: new mongoose.Types.ObjectId().toString() }, user: { id: new mongoose.Types.ObjectId() } };
 
     // Mock leave request found in the database
     const leaveRequestId = new mongoose.Types.ObjectId();
@@ -305,7 +305,7 @@ describe('DeleteLeaveRequest Function Test', () => {
     const findByIdAndDeleteStub = sinon.stub(LeaveRequest, 'findByIdAndDelete').resolves(null);
 
     // Mock request data
-    const req = { params: { id: new mongoose.Types.ObjectId().toString() } };
+    const req = { params: { id: new mongoose.Types.ObjectId().toString() }, user: { id: new mongoose.Types.ObjectId() } };
 
     // Mock response object
     const res = {
@@ -330,7 +330,7 @@ describe('DeleteLeaveRequest Function Test', () => {
     const findByIdAndDeleteStub = sinon.stub(LeaveRequest, 'findByIdAndDelete').throws(new Error('DB Error'));
 
     // Mock request data
-    const req = { params: { id: new mongoose.Types.ObjectId().toString() } };
+    const req = { params: { id: new mongoose.Types.ObjectId().toString() }, user: { id: new mongoose.Types.ObjectId() } };
 
     // Mock response object
     const res = {
@@ -368,6 +368,7 @@ describe('ReviewLeave Function Test', () => {
     // Mock request & response
     const req = {
       params: { id: leaveRequestId },
+      user: { id: new mongoose.Types.ObjectId() },
       body: { status: "Approved" } // Update status
     };
     const res = {
@@ -392,7 +393,7 @@ describe('ReviewLeave Function Test', () => {
   it('should return 404 if leave request is not found', async () => {
     const findByIdStub = sinon.stub(LeaveRequest, 'findById').resolves(null);
 
-    const req = { params: { id: new mongoose.Types.ObjectId() }, body: {} };
+    const req = { params: { id: new mongoose.Types.ObjectId() }, user: { id: new mongoose.Types.ObjectId() }, body: {} };
     const res = {
       status: sinon.stub().returnsThis(),
       json: sinon.spy()
@@ -409,7 +410,7 @@ describe('ReviewLeave Function Test', () => {
   it('should return 500 on error', async () => {
     const findByIdStub = sinon.stub(LeaveRequest, 'findById').throws(new Error('DB Error'));
 
-    const req = { params: { id: new mongoose.Types.ObjectId() }, body: {} };
+    const req = { params: { id: new mongoose.Types.ObjectId() }, user: { id: new mongoose.Types.ObjectId() }, body: {} };
     const res = {
       status: sinon.stub().returnsThis(),
       json: sinon.spy()
