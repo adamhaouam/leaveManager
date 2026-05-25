@@ -23,6 +23,15 @@ const LeaveRequestForm = ({ leaveRequests, setLeaveRequests, editingLeaveRequest
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+        //Do checks before sending to backend
+        if (!formData.leaveType || !formData.startDate || !formData.endDate) {
+            alert('Please fill in all required fields.');
+            return;
+        }
+        if (new Date(formData.startDate) > new Date(formData.endDate)) {
+            alert('Start date cannot be after end date.');
+            return;
+        }
       if (editingLeaveRequest) {
         const response = await axiosInstance.put(`/api/leave-requests/${editingLeaveRequest._id}`, formData, {
           headers: { Authorization: `Bearer ${user.token}` },
@@ -37,7 +46,10 @@ const LeaveRequestForm = ({ leaveRequests, setLeaveRequests, editingLeaveRequest
       setEditingLeaveRequest(null);
       setFormData({ leaveType: '', startDate: '', endDate: '', reason: '' });
     } catch (error) {
-      alert('Failed to save leave request.');
+        if (error.response.status === 409) {
+            alert('Leave request conflicts with an existing approved leave. Please choose different dates.');
+        } else alert('Failed to save leave request.');
+
     }
   };
 
@@ -50,7 +62,9 @@ const LeaveRequestForm = ({ leaveRequests, setLeaveRequests, editingLeaveRequest
         onChange={(e) => setFormData({ ...formData, leaveType: e.target.value })}
         className="w-full mb-4 p-2 border rounded"
       >
-        <option disabled selected hidden value="">Select Leave Type</option>
+        <option disabled selected hidden value="">
+          Select Leave Type
+        </option>
         {LEAVE_TYPES.map((type) => (
           <option key={type.id} value={type.id}>
             {type.label}
