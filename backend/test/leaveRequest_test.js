@@ -21,7 +21,7 @@ describe('AddLeaveRequest Function Test', () => {
     // Mock request data
     const req = {
       user: { id: new mongoose.Types.ObjectId() },
-      body: { leaveType: "Annual", startDate: "2025-12-01", endDate: "2025-12-10", reason: "Family trip" }
+      body: { leaveType: "annual", startDate: "2025-01-01", endDate: "2025-02-02", reason: "Family trip" }
     };
 
     // Mock leave request that would be created
@@ -29,6 +29,9 @@ describe('AddLeaveRequest Function Test', () => {
 
     // Stub LeaveRequest.create to return the createdLeaveRequest
     const createStub = sinon.stub(LeaveRequest, 'create').resolves(createdLeaveRequest);
+
+    //Stub LeaveRequest.findOne to return null (no conflict)
+    const findOneStub = sinon.stub(LeaveRequest, 'findOne').resolves(null);
 
     // Mock response object
     const res = {
@@ -46,6 +49,7 @@ describe('AddLeaveRequest Function Test', () => {
 
     // Restore stubbed methods
     createStub.restore();
+    findOneStub.restore();
   });
 
   
@@ -54,10 +58,13 @@ describe('AddLeaveRequest Function Test', () => {
     // Stub LeaveRequest.create to throw an error
     const createStub = sinon.stub(LeaveRequest, 'create').throws(new Error('DB Error'));
 
+    //Stub LeaveRequest.findOne to return null (no conflict)
+    const findOneStub = sinon.stub(LeaveRequest, 'findOne').resolves(null);
+
     // Mock request data
     const req = {
       user: { id: new mongoose.Types.ObjectId() },
-      body: { leaveType: "Annual", startDate: "2025-12-01", endDate: "2025-12-10", reason: "Family trip" }
+      body: { leaveType: "annual", startDate: "2025-12-01", endDate: "2025-12-10", reason: "Family trip" }
     };
 
     // Mock response object
@@ -75,7 +82,49 @@ describe('AddLeaveRequest Function Test', () => {
 
     // Restore stubbed methods
     createStub.restore();
+    findOneStub.restore();
   });
+
+
+  it('should return 409 if containing conflicting dates', async () => {
+    // Mock leave request data
+    const existingLeaveRequest = {
+      _id: new mongoose.Types.ObjectId(),
+      leaveType: "annual",
+      startDate: "2025-12-01",
+      endDate: "2025-12-10",
+      reason: "Family trip",
+    };
+
+    
+
+    //Stub LeaveRequest.findOne to return null (no conflict)
+    const findOneStub = sinon.stub(LeaveRequest, 'findOne').resolves(true);
+
+    // Mock request data
+    const req = {
+      user: { id: new mongoose.Types.ObjectId() },
+      body: { leaveType: "annual", startDate: "2025-12-03", endDate: "2025-12-08", reason: "Work trip" }
+    };
+
+    // Mock response object
+    const res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.spy()
+    };
+
+    // Call function
+    await addLeaveRequest(req, res);
+
+    // Assertions
+    expect(res.status.calledWith(409)).to.be.true;
+    expect(res.json.calledWithMatch({ message: 'Leave request conflicts with an existing approved leave.' })).to.be.true;
+
+    // Restore stubbed methods
+    findOneStub.restore();
+  });
+
+
 
 });
 
@@ -87,7 +136,7 @@ describe('Update Function Test', () => {
     const leaveRequestId = new mongoose.Types.ObjectId();
     const existingLeaveRequest = {
       _id: leaveRequestId,
-      leaveType: "Annual",
+      leaveType: "annual",
       startDate: "2025-12-01",
       endDate: "2025-12-10",
       reason: "Family trip",
@@ -110,7 +159,7 @@ describe('Update Function Test', () => {
     await updateLeaveRequest(req, res);
 
     // Assertions
-    expect(existingLeaveRequest.leaveType).to.equal("Annual");
+    expect(existingLeaveRequest.leaveType).to.equal("annual");
     expect(existingLeaveRequest.startDate).to.equal("2026-12-01");
     expect(existingLeaveRequest.endDate).to.equal("2026-12-15");
     expect(res.status.called).to.be.false; // No error status should be set
