@@ -80,6 +80,15 @@ const reviewLeaveRequest = async (req, res) => {
 };
 
 
+const getAllLeaveRequests = async (req, res) => {
+    try {
+        const leaveRequests = await LeaveRequest.find({ status: { $in: ['pending', 'approved'] } });
+        res.json(leaveRequests);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
 
 
-module.exports = { getLeaveRequests, addLeaveRequest, updateLeaveRequest, deleteLeaveRequest, reviewLeaveRequest };
+
+module.exports = { getLeaveRequests, addLeaveRequest, updateLeaveRequest, deleteLeaveRequest, getAllLeaveRequests, reviewLeaveRequest };
