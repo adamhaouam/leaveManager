@@ -13,7 +13,7 @@ const LeaveRequests = () => {
 
   useEffect(() => {
     if (!user) {
-      alert('You must be logged in to view leave requests.');
+      //alert('You must be logged in to view leave requests.');
       navigate('/login');
       return;
     }

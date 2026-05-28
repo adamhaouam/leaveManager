@@ -16,6 +16,22 @@ const LeaveRequestForm = ({ leaveRequests, setLeaveRequests, setEditingLeaveRequ
     }
   };
 
+  const handleReview = async (leaveRequest, newStatus) => {
+    try {
+      console.log(leaveRequest._id, newStatus);
+      const response = await axiosInstance.put(`/api/leave-requests/manage/${leaveRequest._id}`, { ...leaveRequest, status: newStatus }, {
+        headers: { Authorization: `Bearer ${user.token}` },
+        });
+        console.log(response.data, response.data._id, newStatus);
+        setLeaveRequests(leaveRequests.map((lr) => 
+        lr._id === response.data._id ? { ...lr, status: newStatus } : lr
+      ));
+      alert("Request has been " + newStatus + "!");
+    } catch (error) {
+      alert(error.response?.data?.message || 'Failed to update leave request.');
+    }
+  }
+
   return (
     <div>
       {leaveRequests.map((leaveRequest) => (
@@ -26,16 +42,16 @@ const LeaveRequestForm = ({ leaveRequests, setLeaveRequests, setEditingLeaveRequ
           <p className="text-sm text-gray-500">Dates: {new Date(leaveRequest.startDate).toLocaleDateString()} to {new Date(leaveRequest.endDate).toLocaleDateString()}</p>
           <div className="mt-2">
             <button
-              onClick={() => setEditingLeaveRequest(leaveRequest)}
+              onClick={() => handleReview(leaveRequest, 'approved')}
               className="mr-2 bg-yellow-500 text-white px-4 py-2 rounded"
             >
-              Edit
+              Approve
             </button>
             <button
-              onClick={() => handleDelete(leaveRequest._id)}
+              onClick={() => handleReview(leaveRequest, 'rejected')}
               className="bg-red-500 text-white px-4 py-2 rounded"
             >
-              Delete
+              Reject
             </button>
           </div>
         </div>

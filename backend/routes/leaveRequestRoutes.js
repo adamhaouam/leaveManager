@@ -8,6 +8,6 @@ router.route('/:id').put(protect, updateLeaveRequest).delete(protect, deleteLeav
 
 
 router.route('/manage').get(protect, requireManager, getAllLeaveRequests);
-//router.route('/manage/:id/review').put(protect, requireManager, reviewLeaveRequest);
+router.route('/manage/:id').put(protect, requireManager, reviewLeaveRequest);
 
 module.exports = router;

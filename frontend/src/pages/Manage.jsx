@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axiosInstance from '../axiosConfig';
-import LeaveRequestList from '../components/LeaveRequestList';
+import ReviewLeaveList from '../components/ReviewLeaveList';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -76,7 +76,7 @@ const Manage = () => {
         </label>
       </div>
 
-    <LeaveRequestList leaveRequests={filteredLeaveRequests} setLeaveRequests={setLeaveRequests} setReviewingLeaveRequest={setReviewingLeaveRequest} />  
+    <ReviewLeaveList leaveRequests={filteredLeaveRequests} setLeaveRequests={setLeaveRequests} setReviewingLeaveRequest={setReviewingLeaveRequest} />  
     </div>
   );
 };
