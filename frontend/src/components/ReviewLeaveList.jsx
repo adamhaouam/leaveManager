@@ -1,7 +1,7 @@
 import { useAuth } from '../context/AuthContext';
 import axiosInstance from '../axiosConfig';
 import ReviewDialog from '../components/reviewDialog';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 const LeaveRequestList = ({ leaveRequests, setLeaveRequests, setEditingLeaveRequest }) => {
   const { user } = useAuth();
@@ -17,7 +17,7 @@ const LeaveRequestList = ({ leaveRequests, setLeaveRequests, setEditingLeaveRequ
         lr._id === response.data._id ? { ...lr, status: newStatus, reviewComment: reviewComment } : lr
       ));
       document.querySelector('#reviewRequest').close()
-      alert("Request has been " + newStatus + "!");
+      //alert("Request has been " + newStatus + "!");
     } catch (error) {
       alert(error.response?.data?.message || 'Failed to update leave request.');
     }

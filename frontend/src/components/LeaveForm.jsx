@@ -3,12 +3,14 @@ import { useAuth } from '../context/AuthContext';
 import axiosInstance from '../axiosConfig';
 import LEAVE_TYPES from '../constants/leaveTypes';
 
-const LeaveRequestForm = ({ leaveRequests, setLeaveRequests, editingLeaveRequest, setEditingLeaveRequest }) => {
+const LeaveRequestForm = ({ leaveRequests, setLeaveRequests, editingLeaveRequest, setEditingLeaveRequest, isOpen, setIsOpen }) => {
   const { user } = useAuth();
   const [formData, setFormData] = useState({ leaveType: '', startDate: '', endDate: '', reason: '' });
   const dateConvert = (isoString) => isoString ? isoString.slice(0,10) : ''
   useEffect(() => {
     if (editingLeaveRequest) {
+      setIsOpen(true);
+      console.log("43q345345345");
       setFormData({
         leaveType: editingLeaveRequest.leaveType,
         startDate: dateConvert(editingLeaveRequest.startDate),
@@ -18,7 +20,7 @@ const LeaveRequestForm = ({ leaveRequests, setLeaveRequests, editingLeaveRequest
     } else {
       setFormData({ leaveType: '', startDate: '', endDate: '', reason: '' });
     }
-  }, [editingLeaveRequest]);
+  }, [editingLeaveRequest, setIsOpen]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -45,6 +47,7 @@ const LeaveRequestForm = ({ leaveRequests, setLeaveRequests, editingLeaveRequest
       }
       setEditingLeaveRequest(null);
       setFormData({ leaveType: '', startDate: '', endDate: '', reason: '' });
+      setIsOpen(false);
     } catch (error) {
         if (error.response.status === 409) {
             alert('Leave request conflicts with an existing approved leave. Please choose different dates.');
@@ -54,52 +57,57 @@ const LeaveRequestForm = ({ leaveRequests, setLeaveRequests, editingLeaveRequest
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white p-6 shadow-md rounded mb-6">
-      <h1 className="text-2xl font-bold mb-4">{editingLeaveRequest ? 'Edit Leave Request' : 'Add Leave Request'}</h1>
+    <dialog id="leaveRequestForm" open={isOpen} className="rounded shadow-lg">
+      <form onSubmit={handleSubmit} className="bg-white p-6 shadow-md rounded mb-6">
+        <h1 className="text-2xl font-bold mb-4">{editingLeaveRequest ? 'Edit Leave Request' : 'Add Leave Request'}</h1>
 
-      <select
-        value={formData.leaveType}
-        onChange={(e) => setFormData({ ...formData, leaveType: e.target.value })}
-        className="w-full mb-4 p-2 border rounded"
-        defualtvalue=""
-      >
-        <option disabled hidden value="">
-          Select Leave Type
-        </option>
-        {LEAVE_TYPES.map((type) => (
-          <option key={type.id} value={type.id}>
-            {type.label}
+        <select
+          value={formData.leaveType}
+          onChange={(e) => setFormData({ ...formData, leaveType: e.target.value })}
+          className="w-full mb-4 p-2 border rounded"
+          defualtvalue=""
+        >
+          <option disabled hidden value="">
+            Select Leave Type
           </option>
-        ))}
-      </select>
-      
-      <input
-        required
-        type="date"
-        placeholder="Start Date"
-        value={formData.startDate}
-        onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
-        className="w-full mb-4 p-2 border rounded"
-      />
-      <input
-        required
-        type="date"
-        placeholder="End Date"
-        value={formData.endDate}
-        onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
-        className="w-full mb-4 p-2 border rounded"
-      />
-      <input
-        type="text"
-        placeholder="Reason (optional)"
-        value={formData.reason}
-        onChange={(e) => setFormData({ ...formData, reason: e.target.value })}
-        className="w-full mb-4 p-2 border rounded"
-      />
-      <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded">
-        {editingLeaveRequest ? 'Update Leave Request' : 'Add Leave Request'}
-      </button>
-    </form>
+          {LEAVE_TYPES.map((type) => (
+            <option key={type.id} value={type.id}>
+              {type.label}
+            </option>
+          ))}
+        </select>
+        
+        <input
+          required
+          type="date"
+          placeholder="Start Date"
+          value={formData.startDate}
+          onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
+          className="w-full mb-4 p-2 border rounded"
+        />
+        <input
+          required
+          type="date"
+          placeholder="End Date"
+          value={formData.endDate}
+          onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
+          className="w-full mb-4 p-2 border rounded"
+        />
+        <input
+          type="text"
+          placeholder="Reason (optional)"
+          value={formData.reason}
+          onChange={(e) => setFormData({ ...formData, reason: e.target.value })}
+          className="w-full mb-4 p-2 border rounded"
+        />
+        <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded">
+          {editingLeaveRequest ? 'Update Leave Request' : 'Add Leave Request'}
+        </button>
+        <button type="button" className="w-full bg-gray-500 text-white p-2 rounded mt-2" onClick={() => { setEditingLeaveRequest(null); setIsOpen(false); }}>
+          Cancel
+        </button>
+      </form>
+    </dialog>
   );
 };
 
