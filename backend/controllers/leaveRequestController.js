@@ -66,12 +66,13 @@ const deleteLeaveRequest = async (req, res) => {
 
 
 const reviewLeaveRequest = async (req, res) => {
-    const { status } = req.body;
+    const { status, reviewComment } = req.body;
     try {
         const leaveRequest = await LeaveRequest.findById(req.params.id);
         if (!leaveRequest) return res.status(404).json({ message: 'Leave request not found' });
 
         leaveRequest.status = status;
+        leaveRequest.reviewComment = reviewComment;
         const updatedLeaveRequest = await leaveRequest.save();
         res.json(updatedLeaveRequest);
     } catch (error) {

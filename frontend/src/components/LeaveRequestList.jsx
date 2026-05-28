@@ -23,6 +23,7 @@ const LeaveRequestForm = ({ leaveRequests, setLeaveRequests, setEditingLeaveRequ
           <h2 className="font-bold">{leaveRequest.leaveType}</h2>
           <p>{leaveRequest.reason}</p>
           <p>{leaveRequest.status}</p>
+          <p>{leaveRequest.reviewComment}</p>
           <p className="text-sm text-gray-500">Dates: {new Date(leaveRequest.startDate).toLocaleDateString()} to {new Date(leaveRequest.endDate).toLocaleDateString()}</p>
           <div className="mt-2">
             <button

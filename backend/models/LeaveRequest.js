@@ -9,6 +9,7 @@ const taskSchema = new mongoose.Schema({
     reason: { type: String },
     createdAt: { type: Date, default: Date.now },
     status: { type: String, enum: ['pending', 'approved', 'rejected'], default: 'pending' },
+    reviewComment: { type: String },
 });
 
 module.exports = mongoose.model('LeaveRequest', taskSchema);
