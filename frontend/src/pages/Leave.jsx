@@ -10,6 +10,7 @@ const LeaveRequests = () => {
   const [leaveRequests, setLeaveRequests] = useState([]);
   const [editingLeaveRequest, setEditingLeaveRequest] = useState(null);
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     if (!user) {
@@ -33,11 +34,19 @@ const LeaveRequests = () => {
 
   return (
     <div className="container mx-auto p-6">
+      <button
+              onClick={() => setIsOpen(true)}
+              className="bg-red-500 text-white px-4 py-2 rounded"
+            >
+              Add New
+            </button>
       <LeaveRequestForm
         leaveRequests={leaveRequests}
         setLeaveRequests={setLeaveRequests}
         editingLeaveRequest={editingLeaveRequest}
         setEditingLeaveRequest={setEditingLeaveRequest}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
       />
 
     <LeaveRequestList leaveRequests={leaveRequests} setLeaveRequests={setLeaveRequests} setEditingLeaveRequest={setEditingLeaveRequest} />  
