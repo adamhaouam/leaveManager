@@ -21,4 +21,15 @@ const protect = async (req, res, next) => {
     }
 };
 
-module.exports = { protect };
+
+const requireManager = (req, res, next) => {
+  if (req.user && req.user.role === 'manager') {
+    next();
+  } else {
+    res.status(403).json({ message: 'Not authorised as manager.' });
+  }
+};
+
+
+
+module.exports = { protect, requireManager };

@@ -61,8 +61,9 @@ const LeaveRequestForm = ({ leaveRequests, setLeaveRequests, editingLeaveRequest
         value={formData.leaveType}
         onChange={(e) => setFormData({ ...formData, leaveType: e.target.value })}
         className="w-full mb-4 p-2 border rounded"
+        defualtvalue=""
       >
-        <option disabled selected hidden value="">
+        <option disabled hidden value="">
           Select Leave Type
         </option>
         {LEAVE_TYPES.map((type) => (

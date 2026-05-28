@@ -1,17 +1,22 @@
 import { useState, useEffect } from 'react';
 import axiosInstance from '../axiosConfig';
-//import TaskForm from '../components/TaskForm';
 import LeaveRequestForm from '../components/LeaveForm';
 import LeaveRequestList from '../components/LeaveRequestList';
-//import TaskList from '../components/TaskList';
 import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const LeaveRequests = () => {
   const { user } = useAuth();
   const [leaveRequests, setLeaveRequests] = useState([]);
   const [editingLeaveRequest, setEditingLeaveRequest] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!user) {
+      alert('You must be logged in to view leave requests.');
+      navigate('/login');
+      return;
+    }
     const fetchLeaveRequests = async () => {
       try {
         const response = await axiosInstance.get('/api/leave-requests', {
@@ -24,7 +29,7 @@ const LeaveRequests = () => {
     };
 
     fetchLeaveRequests();
-  }, [user]);
+  }, [user, navigate]);
 
   return (
     <div className="container mx-auto p-6">

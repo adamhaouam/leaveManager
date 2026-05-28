@@ -5,6 +5,7 @@ import Register from './pages/Register';
 import Profile from './pages/Profile';
 import Tasks from './pages/Tasks';
 import Leave from './pages/Leave';
+import Manage from './pages/Manage';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/tasks" element={<Tasks />} />
         <Route path="/leave" element={<Leave />} />
+        <Route path="/manage" element={<Manage />} />
       </Routes>
     </Router>
   );
