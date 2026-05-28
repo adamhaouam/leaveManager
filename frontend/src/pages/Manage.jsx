@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom';
 const Manage = () => {
   const { user } = useAuth();
   const [leaveRequests, setLeaveRequests] = useState([]);
-  const [reviewingLeaveRequest, setReviewingLeaveRequest] = useState(null);
   const [statusFilter, setStatusFilter] = useState([]);
   const navigate = useNavigate();
   
@@ -30,7 +29,6 @@ const Manage = () => {
           headers: { Authorization: `Bearer ${user.token}` },
         });
         setLeaveRequests(response.data);
-        //setLeaveRequests(leaveRequests.filter((leaveRequest) => statusFilter.includes(leaveRequest.status)));
       } catch (error) {
         alert('Failed to fetch leave requests.');
       }
@@ -75,8 +73,9 @@ const Manage = () => {
           value='rejected' type="checkbox" /> Rejected
         </label>
       </div>
-
-    <ReviewLeaveList leaveRequests={filteredLeaveRequests} setLeaveRequests={setLeaveRequests} setReviewingLeaveRequest={setReviewingLeaveRequest} />  
+    
+    <ReviewLeaveList leaveRequests={filteredLeaveRequests} setLeaveRequests={setLeaveRequests}/>  
+    
     </div>
   );
 };
