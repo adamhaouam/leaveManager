@@ -14,8 +14,8 @@ const Pending = () => {
   const filteredLeaveRequests = leaveRequests.filter((request) => request.status === "pending");
 
   useEffect(() => {
-    if (!user || user.role !== 'manager') {
-      alert('You must be a manager to view this page.');
+    if (!user || (user.role !== 'manager' && user.role !== 'admin')) {
+      alert('You must be a manager or admin to view this page.');
       navigate('/login');
       return;
     }
