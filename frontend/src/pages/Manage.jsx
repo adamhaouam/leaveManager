@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 const Manage = () => {
   const { user } = useAuth();
   const [leaveRequests, setLeaveRequests] = useState([]);
-  const [statusFilter, setStatusFilter] = useState([]);
+  const [statusFilter, setStatusFilter] = useState(["pending", "approved"]);
   const navigate = useNavigate();
   
   const filteredLeaveRequests = statusFilter.length === 0 
