@@ -18,7 +18,7 @@ const Admin = () => {
 
     const fetchUserList = async () => {
        try {
-        const response = await axiosInstance.get('/api/userlist', {
+        const response = await axiosInstance.get('/api/auth/users', {
           headers: { Authorization: `Bearer ${user.token}` },
         });
         setUsers(response.data);
