@@ -38,9 +38,14 @@ const Navbar = () => {
           </>
         )}
         {user && user.role === 'manager' && (
+          <>
           <Link to="/manage" className="ml-4 bg-yellow-500 px-4 py-2 rounded hover:bg-yellow-700">
-            Manage
+            Manage All
+          </Link><h1>fdasf</h1>
+          <Link to="/pending" className="ml-4 bg-yellow-500 px-4 py-2 rounded hover:bg-yellow-700">
+            Pending
           </Link>
+          </>
         )}
       </div>
     </nav>

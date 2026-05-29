@@ -38,8 +38,9 @@ const Manage = () => {
     fetchLeaveRequests();
   }, [user, navigate]);
 
+
   const handleFilter = async (e) => {
-    console.log(statusFilter);
+    
     try {
       if (e.target.checked) {
         setStatusFilter([...statusFilter, e.target.value]);
@@ -54,7 +55,7 @@ const Manage = () => {
 
   return (
     <div className="container mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6">Pending Leave Requests</h1>
+      <h1 className="text-3xl font-bold mb-6">All Leave Requests</h1>
       <div className="mb-6">
         Filter by status:
         <label className="ml-4">
@@ -76,6 +77,7 @@ const Manage = () => {
         </label>
       </div>
     
+    <button onClick={() => console.log(statusFilter)}>Log Status Filter</button>
     <AllLeaveList leaveRequests={filteredLeaveRequests} setLeaveRequests={setLeaveRequests} editingLeaveRequest={editingLeaveRequest} setEditingLeaveRequest={setEditingLeaveRequest}/>  
     
     </div>

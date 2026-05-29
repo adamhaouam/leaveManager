@@ -3,7 +3,7 @@ import axiosInstance from '../axiosConfig';
 import ReviewDialog from './reviewDialog';
 import { useState } from 'react';
 
-const AllLeaveList = ({ leaveRequests, setLeaveRequests, editingLeaveRequest, setEditingLeaveRequest }) => {
+const ReviewLeaveList = ({ leaveRequests, setLeaveRequests, editingLeaveRequest, setEditingLeaveRequest }) => {
   const { user } = useAuth();
   const [reviewComment, setReviewComment] = useState('');
   const [isOpen, setIsOpen] = useState(false);
@@ -34,11 +34,27 @@ const AllLeaveList = ({ leaveRequests, setLeaveRequests, editingLeaveRequest, se
           <p>{leaveRequest.reviewComment}</p>
           <p className="text-sm text-gray-500">Dates: {new Date(leaveRequest.startDate).toLocaleDateString()} to {new Date(leaveRequest.endDate).toLocaleDateString()}</p>
           <div className="mt-2">
+            <button
+              onClick={() => {
+                setEditingLeaveRequest(leaveRequest);
+                setIsOpen(true);
+              }}
+              className="bg-red-500 text-white px-4 py-2 rounded"
+            >
+              Review
+            </button>
+
+
           </div>
         </div>
       ))}
+      <ReviewDialog leaveRequest={editingLeaveRequest} onClose={() => setIsOpen(false)} 
+      onApprove={() => handleReview(editingLeaveRequest, 'approved')} 
+      onReject={() => handleReview(editingLeaveRequest, 'rejected') } 
+      setReviewComment={setReviewComment}
+      isOpen={isOpen}/>
     </div>
   );
 };
 
-export default AllLeaveList;
+export default ReviewLeaveList;
