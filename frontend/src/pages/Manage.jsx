@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axiosInstance from '../axiosConfig';
-import ReviewLeaveList from '../components/ReviewLeaveList';
+import AllLeaveList from '../components/AllLeaveList';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 const Manage = () => {
   const { user } = useAuth();
   const [leaveRequests, setLeaveRequests] = useState([]);
-  const [statusFilter, setStatusFilter] = useState(["approved", "pending"]);
+  const [statusFilter, setStatusFilter] = useState(["pending", "approved"]);
   const [editingLeaveRequest, setEditingLeaveRequest] = useState(null);
   const navigate = useNavigate();
   
@@ -76,7 +76,7 @@ const Manage = () => {
         </label>
       </div>
     
-    <ReviewLeaveList leaveRequests={filteredLeaveRequests} setLeaveRequests={setLeaveRequests} editingLeaveRequest={editingLeaveRequest} setEditingLeaveRequest={setEditingLeaveRequest}/>  
+    <AllLeaveList leaveRequests={filteredLeaveRequests} setLeaveRequests={setLeaveRequests} editingLeaveRequest={editingLeaveRequest} setEditingLeaveRequest={setEditingLeaveRequest}/>  
     
     </div>
   );

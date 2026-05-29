@@ -1,9 +1,9 @@
 import { useAuth } from '../context/AuthContext';
 import axiosInstance from '../axiosConfig';
-import ReviewDialog from '../components/reviewDialog';
+import ReviewDialog from './reviewDialog';
 import { useState } from 'react';
 
-const ReviewLeaveList = ({ leaveRequests, setLeaveRequests, editingLeaveRequest, setEditingLeaveRequest }) => {
+const MyLeaveListAllLeaveList = ({ leaveRequests, setLeaveRequests, editingLeaveRequest, setEditingLeaveRequest }) => {
   const { user } = useAuth();
   const [reviewComment, setReviewComment] = useState('');
   const [isOpen, setIsOpen] = useState(false);
@@ -57,4 +57,4 @@ const ReviewLeaveList = ({ leaveRequests, setLeaveRequests, editingLeaveRequest,
   );
 };
 
-export default ReviewLeaveList;
+export default MyLeaveListAllLeaveList;

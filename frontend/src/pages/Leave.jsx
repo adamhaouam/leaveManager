@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axiosInstance from '../axiosConfig';
 import LeaveRequestForm from '../components/LeaveForm';
-import LeaveRequestList from '../components/LeaveRequestList';
+import MyLeaveList from '../components/MyLeaveList';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -90,7 +90,7 @@ const LeaveRequests = () => {
         setIsOpen={setIsOpen}
       />
 
-    <LeaveRequestList leaveRequests={filteredLeaveRequests} setLeaveRequests={setLeaveRequests} setEditingLeaveRequest={setEditingLeaveRequest} />  
+    <MyLeaveList leaveRequests={filteredLeaveRequests} setLeaveRequests={setLeaveRequests} setEditingLeaveRequest={setEditingLeaveRequest} />  
     </div>
   );
 };

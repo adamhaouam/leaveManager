@@ -2,7 +2,7 @@ import { useAuth } from '../context/AuthContext';
 import axiosInstance from '../axiosConfig';
 
 
-const LeaveRequestForm = ({ leaveRequests, setLeaveRequests, setEditingLeaveRequest }) => {
+const MyLeaveList = ({ leaveRequests, setLeaveRequests, setEditingLeaveRequest }) => {
   const { user } = useAuth();
 
   const handleDelete = async (leaveRequestId) => {
@@ -45,4 +45,4 @@ const LeaveRequestForm = ({ leaveRequests, setLeaveRequests, setEditingLeaveRequ
   );
 };
 
-export default LeaveRequestForm;
+export default MyLeaveList;
