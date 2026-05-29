@@ -16,6 +16,7 @@ const addLeaveRequest = async (req, res) => {
             userId: req.user.id,   
             startDate: { $lt: new Date(endDate) },
             endDate: { $gt: new Date(startDate) },
+            status: { $in: ['pending', 'approved'] }, 
         });
         if (checkConflict) {
             return res.status(409).json({ message: 'Leave request conflicts with an existing requested leave.' });
@@ -35,8 +36,10 @@ const updateLeaveRequest = async (req, res) => {
             userId: req.user.id,   
             startDate: { $lt: new Date(endDate) },
             endDate: { $gt: new Date(startDate) },
+            status: { $in: ['pending', 'approved'] },
         });
         if (checkConflict) {
+            console.log("Conflict detected with leave request ID:", checkConflict.status, checkConflict.startDate, checkConflict.endDate);
             return res.status(409).json({ message: 'Leave request conflicts with an existing requested leave.' });
         }
         const leaveRequest = await LeaveRequest.findById(req.params.id);
@@ -83,7 +86,7 @@ const reviewLeaveRequest = async (req, res) => {
 
 const getAllLeaveRequests = async (req, res) => {
     try {
-        const leaveRequests = await LeaveRequest.find({ status: { $in: ['pending', 'approved'] } });
+        const leaveRequests = await LeaveRequest.find({ });
         res.json(leaveRequests);
     } catch (error) {
         res.status(500).json({ message: error.message });

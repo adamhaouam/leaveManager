@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axiosInstance from '../axiosConfig';
-import ReviewLeaveList from '../components/ReviewLeaveList';
+import AllLeaveList from '../components/AllLeaveList';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,7 +8,8 @@ import { useNavigate } from 'react-router-dom';
 const Manage = () => {
   const { user } = useAuth();
   const [leaveRequests, setLeaveRequests] = useState([]);
-  const [statusFilter, setStatusFilter] = useState([]);
+  const [statusFilter, setStatusFilter] = useState(["pending", "approved"]);
+  const [editingLeaveRequest, setEditingLeaveRequest] = useState(null);
   const navigate = useNavigate();
   
   const filteredLeaveRequests = statusFilter.length === 0 
@@ -37,7 +38,9 @@ const Manage = () => {
     fetchLeaveRequests();
   }, [user, navigate]);
 
+
   const handleFilter = async (e) => {
+    
     try {
       if (e.target.checked) {
         setStatusFilter([...statusFilter, e.target.value]);
@@ -52,7 +55,7 @@ const Manage = () => {
 
   return (
     <div className="container mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6">Pending Leave Requests</h1>
+      <h1 className="text-3xl font-bold mb-6">All Leave Requests</h1>
       <div className="mb-6">
         Filter by status:
         <label className="ml-4">
@@ -74,7 +77,8 @@ const Manage = () => {
         </label>
       </div>
     
-    <ReviewLeaveList leaveRequests={filteredLeaveRequests} setLeaveRequests={setLeaveRequests}/>  
+    <button onClick={() => console.log(statusFilter)}>Log Status Filter</button>
+    <AllLeaveList leaveRequests={filteredLeaveRequests} setLeaveRequests={setLeaveRequests} editingLeaveRequest={editingLeaveRequest} setEditingLeaveRequest={setEditingLeaveRequest}/>  
     
     </div>
   );

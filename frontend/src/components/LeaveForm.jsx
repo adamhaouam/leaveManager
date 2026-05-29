@@ -10,7 +10,6 @@ const LeaveRequestForm = ({ leaveRequests, setLeaveRequests, editingLeaveRequest
   useEffect(() => {
     if (editingLeaveRequest) {
       setIsOpen(true);
-      console.log("43q345345345");
       setFormData({
         leaveType: editingLeaveRequest.leaveType,
         startDate: dateConvert(editingLeaveRequest.startDate),
