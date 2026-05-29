@@ -11,7 +11,7 @@ const Pending = () => {
   const [editingLeaveRequest, setEditingLeaveRequest] = useState(null);
   const navigate = useNavigate();
   
-  const filteredLeaveRequests = leaveRequests.filter((request) => request.status == "pending");
+  const filteredLeaveRequests = leaveRequests.filter((request) => request.status === "pending");
 
   useEffect(() => {
     if (!user || user.role !== 'manager') {

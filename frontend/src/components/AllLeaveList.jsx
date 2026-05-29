@@ -1,27 +1,4 @@
-import { useAuth } from '../context/AuthContext';
-import axiosInstance from '../axiosConfig';
-import ReviewDialog from './reviewDialog';
-import { useState } from 'react';
-
 const AllLeaveList = ({ leaveRequests, setLeaveRequests, editingLeaveRequest, setEditingLeaveRequest }) => {
-  const { user } = useAuth();
-  const [reviewComment, setReviewComment] = useState('');
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleReview = async (leaveRequest, newStatus) => {
-    try {
-      const response = await axiosInstance.put(`/api/leave-requests/manage/${leaveRequest._id}`, { status: newStatus, reviewComment: "ACTIONED!!!" }, {
-        headers: { Authorization: `Bearer ${user.token}` },
-        });
-        setLeaveRequests(leaveRequests.map((lr) => 
-        lr._id === response.data._id ? { ...lr, status: newStatus, reviewComment: reviewComment } : lr
-      ));
-      setIsOpen(false);
-      //alert("Request has been " + newStatus + "!");
-    } catch (error) {
-      alert(error.response?.data?.message || 'Failed to update leave request.');
-    }
-  }
 
   return (
     <div>
