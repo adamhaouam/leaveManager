@@ -1,13 +1,13 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Profile from './pages/Profile';
-import Tasks from './pages/Tasks';
-import Leave from './pages/Leave';
-import Manage from './pages/Manage';
-import Pending from './pages/Pending';
-import Admin from './pages/Admin';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Profile from "./pages/Profile";
+import Tasks from "./pages/Tasks";
+import Leave from "./pages/Leave";
+import Manage from "./pages/Manage";
+import Pending from "./pages/Pending";
+import Admin from "./pages/Admin";
 
 function App() {
   return (

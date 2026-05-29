@@ -1,8 +1,11 @@
-import { useAuth } from '../context/AuthContext';
-import axiosInstance from '../axiosConfig';
+import { useAuth } from "../context/AuthContext";
+import axiosInstance from "../axiosConfig";
 
-
-const MyLeaveList = ({ leaveRequests, setLeaveRequests, setEditingLeaveRequest }) => {
+const MyLeaveList = ({
+  leaveRequests,
+  setLeaveRequests,
+  setEditingLeaveRequest,
+}) => {
   const { user } = useAuth();
 
   const handleDelete = async (leaveRequestId) => {
@@ -10,21 +13,31 @@ const MyLeaveList = ({ leaveRequests, setLeaveRequests, setEditingLeaveRequest }
       await axiosInstance.delete(`/api/leave-requests/${leaveRequestId}`, {
         headers: { Authorization: `Bearer ${user.token}` },
       });
-      setLeaveRequests(leaveRequests.filter((leaveRequest) => leaveRequest._id !== leaveRequestId));
+      setLeaveRequests(
+        leaveRequests.filter(
+          (leaveRequest) => leaveRequest._id !== leaveRequestId,
+        ),
+      );
     } catch (error) {
-      alert('Failed to delete leave request.');
+      alert("Failed to delete leave request.");
     }
   };
 
   return (
     <div>
       {leaveRequests.map((leaveRequest) => (
-        <div key={leaveRequest._id} className="bg-gray-100 p-4 mb-4 rounded shadow">
+        <div
+          key={leaveRequest._id}
+          className="bg-gray-100 p-4 mb-4 rounded shadow"
+        >
           <h2 className="font-bold">{leaveRequest.leaveType}</h2>
           <p>{leaveRequest.reason}</p>
           <p>{leaveRequest.status}</p>
           <p>{leaveRequest.reviewComment}</p>
-          <p className="text-sm text-gray-500">Dates: {new Date(leaveRequest.startDate).toLocaleDateString()} to {new Date(leaveRequest.endDate).toLocaleDateString()}</p>
+          <p className="text-sm text-gray-500">
+            Dates: {new Date(leaveRequest.startDate).toLocaleDateString()} to{" "}
+            {new Date(leaveRequest.endDate).toLocaleDateString()}
+          </p>
           <div className="mt-2">
             <button
               onClick={() => setEditingLeaveRequest(leaveRequest)}

@@ -1,5 +1,4 @@
 const UserList = ({ users }) => {
-
   return (
     <div>
       {users.map((user) => (

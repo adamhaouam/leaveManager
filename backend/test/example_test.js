@@ -1,8 +1,7 @@
-
 // const chai = require('chai');
 // const chaiHttp = require('chai-http');
 // const http = require('http');
-// const app = require('../server'); 
+// const app = require('../server');
 // const connectDB = require('../config/db');
 // const mongoose = require('mongoose');
 // const sinon = require('sinon');
@@ -13,7 +12,6 @@
 // chai.use(chaiHttp);
 // let server;
 // let port;
-
 
 // describe('AddTask Function Test', () => {
 
@@ -77,7 +75,6 @@
 
 // });
 
-
 // describe('Update Function Test', () => {
 
 //   it('should update task successfully', async () => {
@@ -100,7 +97,7 @@
 //       body: { title: "New Task", completed: true }
 //     };
 //     const res = {
-//       json: sinon.spy(), 
+//       json: sinon.spy(),
 //       status: sinon.stub().returnsThis()
 //     };
 
@@ -116,8 +113,6 @@
 //     // Restore stubbed methods
 //     findByIdStub.restore();
 //   });
-
-
 
 //   it('should return 404 if task is not found', async () => {
 //     const findByIdStub = sinon.stub(Task, 'findById').resolves(null);
@@ -153,11 +148,7 @@
 //     findByIdStub.restore();
 //   });
 
-
-
 // });
-
-
 
 // describe('GetTask Function Test', () => {
 
@@ -217,8 +208,6 @@
 
 // });
 
-
-
 // describe('DeleteTask Function Test', () => {
 
 //   it('should delete a task successfully', async () => {
@@ -228,7 +217,6 @@
 //     // Mock task found in the database
 //     const taskId = new mongoose.Types.ObjectId();
 //     const task = { _id: taskId };
-
 
 //     // Stub Task.findByIdAndDelete to return the mock task
 //     const findByIdAndDeleteStub = sinon.stub(Task, 'findByIdAndDelete').resolves(taskId);

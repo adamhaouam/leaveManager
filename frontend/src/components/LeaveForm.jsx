@@ -1,12 +1,24 @@
-import { useState, useEffect } from 'react';
-import { useAuth } from '../context/AuthContext';
-import axiosInstance from '../axiosConfig';
-import LEAVE_TYPES from '../constants/leaveTypes';
+import { useState, useEffect } from "react";
+import { useAuth } from "../context/AuthContext";
+import axiosInstance from "../axiosConfig";
+import LEAVE_TYPES from "../constants/leaveTypes";
 
-const LeaveRequestForm = ({ leaveRequests, setLeaveRequests, editingLeaveRequest, setEditingLeaveRequest, isOpen, setIsOpen }) => {
+const LeaveRequestForm = ({
+  leaveRequests,
+  setLeaveRequests,
+  editingLeaveRequest,
+  setEditingLeaveRequest,
+  isOpen,
+  setIsOpen,
+}) => {
   const { user } = useAuth();
-  const [formData, setFormData] = useState({ leaveType: '', startDate: '', endDate: '', reason: '' });
-  const dateConvert = (isoString) => isoString ? isoString.slice(0,10) : ''
+  const [formData, setFormData] = useState({
+    leaveType: "",
+    startDate: "",
+    endDate: "",
+    reason: "",
+  });
+  const dateConvert = (isoString) => (isoString ? isoString.slice(0, 10) : "");
   useEffect(() => {
     if (editingLeaveRequest) {
       setIsOpen(true);
@@ -17,52 +29,74 @@ const LeaveRequestForm = ({ leaveRequests, setLeaveRequests, editingLeaveRequest
         reason: editingLeaveRequest.reason,
       });
     } else {
-      setFormData({ leaveType: '', startDate: '', endDate: '', reason: '' });
+      setFormData({ leaveType: "", startDate: "", endDate: "", reason: "" });
     }
   }, [editingLeaveRequest, setIsOpen]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        //Do checks before sending to backend
-        if (!formData.leaveType || !formData.startDate || !formData.endDate) {
-            alert('Please fill in all required fields.');
-            return;
-        }
-        if (new Date(formData.startDate) > new Date(formData.endDate)) {
-            alert('Start date cannot be after end date.');
-            return;
-        }
+      //Do checks before sending to backend
+      if (!formData.leaveType || !formData.startDate || !formData.endDate) {
+        alert("Please fill in all required fields.");
+        return;
+      }
+      if (new Date(formData.startDate) > new Date(formData.endDate)) {
+        alert("Start date cannot be after end date.");
+        return;
+      }
       if (editingLeaveRequest) {
-        const response = await axiosInstance.put(`/api/leave-requests/${editingLeaveRequest._id}`, formData, {
-          headers: { Authorization: `Bearer ${user.token}` },
-        });
-        setLeaveRequests(leaveRequests.map((leaveRequest) => (leaveRequest._id === response.data._id ? response.data : leaveRequest)));
+        const response = await axiosInstance.put(
+          `/api/leave-requests/${editingLeaveRequest._id}`,
+          formData,
+          {
+            headers: { Authorization: `Bearer ${user.token}` },
+          },
+        );
+        setLeaveRequests(
+          leaveRequests.map((leaveRequest) =>
+            leaveRequest._id === response.data._id
+              ? response.data
+              : leaveRequest,
+          ),
+        );
       } else {
-        const response = await axiosInstance.post('/api/leave-requests', formData, {
-          headers: { Authorization: `Bearer ${user.token}` },
-        });
+        const response = await axiosInstance.post(
+          "/api/leave-requests",
+          formData,
+          {
+            headers: { Authorization: `Bearer ${user.token}` },
+          },
+        );
         setLeaveRequests([...leaveRequests, response.data]);
       }
       setEditingLeaveRequest(null);
-      setFormData({ leaveType: '', startDate: '', endDate: '', reason: '' });
+      setFormData({ leaveType: "", startDate: "", endDate: "", reason: "" });
       setIsOpen(false);
     } catch (error) {
-        if (error.response.status === 409) {
-            alert('Leave request conflicts with an existing approved leave. Please choose different dates.');
-        } else alert('Failed to save leave request.');
-
+      if (error.response.status === 409) {
+        alert(
+          "Leave request conflicts with an existing approved leave. Please choose different dates.",
+        );
+      } else alert("Failed to save leave request.");
     }
   };
 
   return (
     <dialog id="leaveRequestForm" open={isOpen} className="rounded shadow-lg">
-      <form onSubmit={handleSubmit} className="bg-white p-6 shadow-md rounded mb-6">
-        <h1 className="text-2xl font-bold mb-4">{editingLeaveRequest ? 'Edit Leave Request' : 'Add Leave Request'}</h1>
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white p-6 shadow-md rounded mb-6"
+      >
+        <h1 className="text-2xl font-bold mb-4">
+          {editingLeaveRequest ? "Edit Leave Request" : "Add Leave Request"}
+        </h1>
 
         <select
           value={formData.leaveType}
-          onChange={(e) => setFormData({ ...formData, leaveType: e.target.value })}
+          onChange={(e) =>
+            setFormData({ ...formData, leaveType: e.target.value })
+          }
           className="w-full mb-4 p-2 border rounded"
           defualtvalue=""
         >
@@ -75,13 +109,15 @@ const LeaveRequestForm = ({ leaveRequests, setLeaveRequests, editingLeaveRequest
             </option>
           ))}
         </select>
-        
+
         <input
           required
           type="date"
           placeholder="Start Date"
           value={formData.startDate}
-          onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
+          onChange={(e) =>
+            setFormData({ ...formData, startDate: e.target.value })
+          }
           className="w-full mb-4 p-2 border rounded"
         />
         <input
@@ -89,7 +125,9 @@ const LeaveRequestForm = ({ leaveRequests, setLeaveRequests, editingLeaveRequest
           type="date"
           placeholder="End Date"
           value={formData.endDate}
-          onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
+          onChange={(e) =>
+            setFormData({ ...formData, endDate: e.target.value })
+          }
           className="w-full mb-4 p-2 border rounded"
         />
         <input
@@ -99,10 +137,20 @@ const LeaveRequestForm = ({ leaveRequests, setLeaveRequests, editingLeaveRequest
           onChange={(e) => setFormData({ ...formData, reason: e.target.value })}
           className="w-full mb-4 p-2 border rounded"
         />
-        <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded">
-          {editingLeaveRequest ? 'Update Leave Request' : 'Add Leave Request'}
+        <button
+          type="submit"
+          className="w-full bg-blue-600 text-white p-2 rounded"
+        >
+          {editingLeaveRequest ? "Update Leave Request" : "Add Leave Request"}
         </button>
-        <button type="button" className="w-full bg-gray-500 text-white p-2 rounded mt-2" onClick={() => { setEditingLeaveRequest(null); setIsOpen(false); }}>
+        <button
+          type="button"
+          className="w-full bg-gray-500 text-white p-2 rounded mt-2"
+          onClick={() => {
+            setEditingLeaveRequest(null);
+            setIsOpen(false);
+          }}
+        >
           Cancel
         </button>
       </form>

@@ -1,9 +1,8 @@
-import { useState, useEffect } from 'react';
-import axiosInstance from '../axiosConfig';
-import AllLeaveList from '../components/AllLeaveList';
-import { useAuth } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
-
+import { useState, useEffect } from "react";
+import axiosInstance from "../axiosConfig";
+import AllLeaveList from "../components/AllLeaveList";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Manage = () => {
   const { user } = useAuth();
@@ -11,47 +10,46 @@ const Manage = () => {
   const [statusFilter, setStatusFilter] = useState(["pending", "approved"]);
   const [editingLeaveRequest, setEditingLeaveRequest] = useState(null);
   const navigate = useNavigate();
-  
-  const filteredLeaveRequests = statusFilter.length === 0 
-  ? leaveRequests 
-  : leaveRequests.filter((request) => statusFilter.includes(request.status));
 
+  const filteredLeaveRequests =
+    statusFilter.length === 0
+      ? leaveRequests
+      : leaveRequests.filter((request) =>
+          statusFilter.includes(request.status),
+        );
 
   useEffect(() => {
-    if (!user || (user.role !== 'manager' && user.role !== 'admin')) {
-      alert('You must be a manager or admin to view this page.');
-      navigate('/login');
+    if (!user || (user.role !== "manager" && user.role !== "admin")) {
+      alert("You must be a manager or admin to view this page.");
+      navigate("/login");
       return;
     }
 
     const fetchLeaveRequests = async () => {
       try {
-        const response = await axiosInstance.get('/api/leave-requests/manage', {
+        const response = await axiosInstance.get("/api/leave-requests/manage", {
           headers: { Authorization: `Bearer ${user.token}` },
         });
         setLeaveRequests(response.data);
       } catch (error) {
-        alert('Failed to fetch leave requests.');
+        alert("Failed to fetch leave requests.");
       }
     };
 
     fetchLeaveRequests();
   }, [user, navigate]);
 
-
   const handleFilter = async (e) => {
-    
     try {
       if (e.target.checked) {
         setStatusFilter([...statusFilter, e.target.value]);
-      }
-      else {
+      } else {
         setStatusFilter(statusFilter.filter((item) => item !== e.target.value));
       }
     } catch (error) {
-      alert('Error adjusting filter.');
+      alert("Error adjusting filter.");
     }
-  }
+  };
 
   return (
     <div className="container mx-auto p-6">
@@ -59,27 +57,42 @@ const Manage = () => {
       <div className="mb-6">
         Filter by status:
         <label className="ml-4">
-          <input 
-          onChange={(e) => handleFilter(e)}
-          defaultChecked={true}
-          value='pending'  type="checkbox" /> Pending
+          <input
+            onChange={(e) => handleFilter(e)}
+            defaultChecked={true}
+            value="pending"
+            type="checkbox"
+          />{" "}
+          Pending
         </label>
         <label className="ml-4">
-          <input 
-          onChange={(e) => handleFilter(e)}
-          defaultChecked={true}
-          value='approved' type="checkbox" /> Approved
+          <input
+            onChange={(e) => handleFilter(e)}
+            defaultChecked={true}
+            value="approved"
+            type="checkbox"
+          />{" "}
+          Approved
         </label>
         <label className="ml-4">
-          <input 
-          onChange={(e) => handleFilter(e)}
-          value='rejected' type="checkbox" /> Rejected
+          <input
+            onChange={(e) => handleFilter(e)}
+            value="rejected"
+            type="checkbox"
+          />{" "}
+          Rejected
         </label>
       </div>
-    
-    <button onClick={() => console.log(statusFilter)}>Log Status Filter</button>
-    <AllLeaveList leaveRequests={filteredLeaveRequests} setLeaveRequests={setLeaveRequests} editingLeaveRequest={editingLeaveRequest} setEditingLeaveRequest={setEditingLeaveRequest}/>  
-    
+
+      <button onClick={() => console.log(statusFilter)}>
+        Log Status Filter
+      </button>
+      <AllLeaveList
+        leaveRequests={filteredLeaveRequests}
+        setLeaveRequests={setLeaveRequests}
+        editingLeaveRequest={editingLeaveRequest}
+        setEditingLeaveRequest={setEditingLeaveRequest}
+      />
     </div>
   );
 };
