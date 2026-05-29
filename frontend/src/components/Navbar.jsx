@@ -11,25 +11,19 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-blue-600 text-white p-4 flex justify-between items-center">
-      <Link to="/" className="text-2xl font-bold">
+    <nav className="bg-gradient-to-r from-cyan-400 to-indigo-600 text-white shadow-lg p-4 flex justify-between items-center">
+      <Link to="/leave" className="text-2xl font-bold">
         Leave Management
       </Link>
-      <div>
+      <div class="*:ml-3 *:px-3 *:py-2 *:rounded-md *:font-medium">
         {user ? (
           <>
-            <Link to="/profile" className="mr-4">
+            <Link to="/profile" >
               Profile
             </Link>
-            <Link to="/leave" className="mr-4">
+            <Link to="/leave" >
               My Leave
             </Link>
-            <button
-              onClick={handleLogout}
-              className="bg-red-500 px-4 py-2 rounded hover:bg-red-700"
-            >
-              Logout
-            </button>
           </>
         ) : (
           <>
@@ -38,7 +32,7 @@ const Navbar = () => {
             </Link>
             <Link
               to="/register"
-              className="bg-green-500 px-4 py-2 rounded hover:bg-green-700"
+              
             >
               Register
             </Link>
@@ -48,13 +42,13 @@ const Navbar = () => {
           <>
             <Link
               to="/manage"
-              className="ml-4 bg-yellow-500 px-4 py-2 rounded hover:bg-yellow-700"
+             
             >
               View All
             </Link>
             <Link
               to="/pending"
-              className="ml-4 bg-yellow-500 px-4 py-2 rounded hover:bg-yellow-700"
+              
             >
               Pending
             </Link>
@@ -64,12 +58,22 @@ const Navbar = () => {
           <>
             <Link
               to="/admin"
-              className="ml-4 bg-red-500 px-4 py-2 rounded hover:bg-red-700"
+              className="ml-4 bg-purple-500 px-4 py-2 rounded hover:bg-purple-700"
             >
               Admin
             </Link>
           </>
         )}
+        {user ? (
+          <>
+            <button
+              onClick={handleLogout}
+              className="bg-red-500 px-4 py-2 rounded ml-5 hover:bg-red-700"
+            >
+              Logout
+            </button>
+          </>
+        ) : <></>}
       </div>
     </nav>
   );

@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 0.5rem;
+    padding: 2rem;
+    z-index: 1000;
+}
+
+#root {
+    @apply bg-gradient-to-b from-orange-50 to-orange-100 min-h-screen;
+}

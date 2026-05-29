@@ -4,7 +4,7 @@ const AllLeaveList = ({ leaveRequests }) => {
       {leaveRequests.map((leaveRequest) => (
         <div
           key={leaveRequest._id}
-          className="bg-gray-100 p-4 mb-4 rounded shadow"
+          className="bg-white p-4 mb-4 rounded shadow"
         >
           <h2 className="font-bold">{leaveRequest.leaveType}</h2>
           <p>{leaveRequest.reason}</p>

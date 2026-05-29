@@ -83,10 +83,9 @@ const LeaveRequestForm = ({
   };
 
   return (
-    <dialog id="leaveRequestForm" open={isOpen} className="rounded shadow-lg">
+    <dialog id="leaveRequestForm" open={isOpen} >
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-6 shadow-md rounded mb-6"
       >
         <h1 className="text-2xl font-bold mb-4">
           {editingLeaveRequest ? "Edit Leave Request" : "Add Leave Request"}
