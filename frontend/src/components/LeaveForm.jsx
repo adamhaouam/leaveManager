@@ -31,6 +31,7 @@ const LeaveRequestForm = ({
     } else {
       setFormData({ leaveType: "", startDate: "", endDate: "", reason: "" });
     }
+    
   }, [editingLeaveRequest, setIsOpen]);
 
   const handleSubmit = async (e) => {
@@ -83,7 +84,7 @@ const LeaveRequestForm = ({
   };
 
   return (
-    <dialog id="leaveRequestForm" open={isOpen} >
+    <dialog id="leaveRequestForm" className="bg-white p-6 border-blue-400 border-2 backdrop:bg-black/50 rounded shadow-lg" open={isOpen} >
       <form
         onSubmit={handleSubmit}
       >
