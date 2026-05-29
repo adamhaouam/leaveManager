@@ -1,13 +1,12 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Profile from './pages/Profile';
-import Tasks from './pages/Tasks';
-import Leave from './pages/Leave';
-import Manage from './pages/Manage';
-import Pending from './pages/Pending';
-import Admin from './pages/Admin';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Profile from "./pages/Profile";
+import Leave from "./pages/Leave";
+import Manage from "./pages/Manage";
+import Pending from "./pages/Pending";
+import Admin from "./pages/Admin";
 
 function App() {
   return (
@@ -17,7 +16,6 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/tasks" element={<Tasks />} />
         <Route path="/leave" element={<Leave />} />
         <Route path="/manage" element={<Manage />} />
         <Route path="/pending" element={<Pending />} />

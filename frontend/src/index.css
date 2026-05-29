@@ -1,3 +1,47 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 0.5rem;
+    padding: 2rem;
+    z-index: 1000;
+}
+
+#root {
+    @apply bg-gradient-to-b from-orange-50 to-orange-100 min-h-screen;
+}
+
+h3 {
+    @apply font-semibold mb-2;
+}
+
+.pending {
+    background-color: #fbbf24;
+    width: fit-content;
+    padding: 0.1rem 0.3rem;
+    border-radius: 0.25rem;
+    border: 2px solid rgb(231, 153, 37);
+}
+
+.rejected {
+    background-color: #f87171;
+    width: fit-content;
+    padding: 0.1rem 0.3rem;
+    border-radius: 0.25rem;
+    border: 2px solid rgb(239, 68, 68);
+}
+
+.approved {
+    background-color: #34d399;
+    width: fit-content;
+    padding: 0.1rem 0.3rem;
+    border-radius: 0.25rem;
+    border: 2px solid rgb(10, 161, 111);
+}
+
+

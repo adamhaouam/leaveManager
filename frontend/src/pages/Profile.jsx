@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'react';
-import { useAuth } from '../context/AuthContext';
-import axiosInstance from '../axiosConfig';
+import { useState, useEffect } from "react";
+import { useAuth } from "../context/AuthContext";
+import axiosInstance from "../axiosConfig";
 
 const Profile = () => {
   const { user } = useAuth(); // Access user token from context
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
+    name: "",
+    email: "",
   });
   const [loading, setLoading] = useState(false);
 
@@ -15,7 +15,7 @@ const Profile = () => {
     const fetchProfile = async () => {
       setLoading(true);
       try {
-        const response = await axiosInstance.get('/api/auth/profile', {
+        const response = await axiosInstance.get("/api/auth/profile", {
           headers: { Authorization: `Bearer ${user.token}` },
         });
         setFormData({
@@ -23,7 +23,7 @@ const Profile = () => {
           email: response.data.email,
         });
       } catch (error) {
-        alert('Failed to fetch profile. Please try again.');
+        alert("Failed to fetch profile. Please try again.");
       } finally {
         setLoading(false);
       }
@@ -36,12 +36,12 @@ const Profile = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await axiosInstance.put('/api/auth/profile', formData, {
+      await axiosInstance.put("/api/auth/profile", formData, {
         headers: { Authorization: `Bearer ${user.token}` },
       });
-      alert('Profile updated successfully!');
+      alert("Profile updated successfully!");
     } catch (error) {
-      alert('Failed to update profile. Please try again.');
+      alert("Failed to update profile. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -70,8 +70,11 @@ const Profile = () => {
           className="w-full mb-4 p-2 border rounded"
         />
         <h2 className="text-lg font-semibold mb-2">Role: {user.role}</h2>
-        <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded">
-          {loading ? 'Updating...' : 'Update Profile'}
+        <button
+          type="submit"
+          className="w-full bg-blue-600 text-white p-2 rounded"
+        >
+          {loading ? "Updating..." : "Update Profile"}
         </button>
       </form>
     </div>

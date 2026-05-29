@@ -1,9 +1,8 @@
-import { useState, useEffect } from 'react';
-import axiosInstance from '../axiosConfig';
-import { useAuth } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
-import UserList from '../components/UserList';
-
+import { useState, useEffect } from "react";
+import axiosInstance from "../axiosConfig";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import UserList from "../components/UserList";
 
 const Admin = () => {
   const { user } = useAuth();
@@ -11,28 +10,25 @@ const Admin = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    if (!user || user.role !== 'admin') {
-      alert('You must be an admin to view this page.');
-      navigate('/login');
+    if (!user || user.role !== "admin") {
+      alert("You must be an admin to view this page.");
+      navigate("/login");
       return;
     }
 
     const fetchUserList = async () => {
-       try {
-        const response = await axiosInstance.get('/api/auth/users', {
+      try {
+        const response = await axiosInstance.get("/api/auth/users", {
           headers: { Authorization: `Bearer ${user.token}` },
         });
         setUsers(response.data);
       } catch (error) {
-        alert('Failed to fetch user list.');
-      } 
-    }
-    
+        alert("Failed to fetch user list.");
+      }
+    };
 
     fetchUserList();
   }, [user, navigate]);
-
-
 
   return (
     <div className="container mx-auto p-6">
