@@ -54,8 +54,8 @@ const Manage = () => {
   return (
     <div className="container mx-auto p-6">
       <h1 className="text-3xl font-bold mb-6">All Leave Requests</h1>
-      <div className="mb-6">
-        Filter by status:
+      <div className="mb-6 flex">
+        <h3>Filter by status:</h3>
         <label className="ml-4">
           <input
             onChange={(e) => handleFilter(e)}
@@ -83,10 +83,6 @@ const Manage = () => {
           Rejected
         </label>
       </div>
-
-      <button onClick={() => console.log(statusFilter)}>
-        Log Status Filter
-      </button>
       <AllLeaveList
         leaveRequests={filteredLeaveRequests}
         setLeaveRequests={setLeaveRequests}
