@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axiosInstance from '../axiosConfig';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import UserList from '../components/UserList';
 
 
 const Admin = () => {
@@ -37,7 +38,7 @@ const Admin = () => {
     <div className="container mx-auto p-6">
       <h1 className="text-3xl font-bold mb-6">All Users</h1>
       
-    
+      <UserList users={users} />
     </div>
   );
 };
