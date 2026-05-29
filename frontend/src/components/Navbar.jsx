@@ -37,13 +37,20 @@ const Navbar = () => {
             </Link>
           </>
         )}
-        {user && user.role === 'manager' && (
+        {user && (user.role === 'manager' || user.role === 'admin') && (
           <>
           <Link to="/manage" className="ml-4 bg-yellow-500 px-4 py-2 rounded hover:bg-yellow-700">
             View All
           </Link>
           <Link to="/pending" className="ml-4 bg-yellow-500 px-4 py-2 rounded hover:bg-yellow-700">
             Pending
+          </Link>
+          </>
+        )}
+        {user && user.role === 'admin' && (
+          <>
+          <Link to="/admin" className="ml-4 bg-red-500 px-4 py-2 rounded hover:bg-red-700">
+            Admin
           </Link>
           </>
         )}

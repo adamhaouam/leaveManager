@@ -7,6 +7,7 @@ import Tasks from './pages/Tasks';
 import Leave from './pages/Leave';
 import Manage from './pages/Manage';
 import Pending from './pages/Pending';
+import Admin from './pages/Admin';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/leave" element={<Leave />} />
         <Route path="/manage" element={<Manage />} />
         <Route path="/pending" element={<Pending />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
     </Router>
   );

@@ -1,4 +1,4 @@
-const AllLeaveList = ({ leaveRequests, setLeaveRequests, editingLeaveRequest, setEditingLeaveRequest }) => {
+const AllLeaveList = ({ leaveRequests }) => {
 
   return (
     <div>

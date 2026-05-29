@@ -23,13 +23,21 @@ const protect = async (req, res, next) => {
 
 
 const requireManager = (req, res, next) => {
-  if (req.user && req.user.role === 'manager') {
+  if (req.user && (req.user.role === 'manager' || req.user.role === 'admin')) {
     next();
   } else {
     res.status(403).json({ message: 'Not authorised as manager.' });
   }
 };
 
+const requireAdmin = (req, res, next) => {
+  if (req.user && req.user.role === 'admin') {
+    next();
+  } else {
+    res.status(403).json({ message: 'Not authorised as admin.' });
+  }
+};
 
 
-module.exports = { protect, requireManager };
+
+module.exports = { protect, requireManager, requireAdmin };
