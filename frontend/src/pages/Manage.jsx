@@ -8,7 +8,8 @@ import { useNavigate } from 'react-router-dom';
 const Manage = () => {
   const { user } = useAuth();
   const [leaveRequests, setLeaveRequests] = useState([]);
-  const [statusFilter, setStatusFilter] = useState([]);
+  const [statusFilter, setStatusFilter] = useState(["approved", "pending"]);
+  const [editingLeaveRequest, setEditingLeaveRequest] = useState(null);
   const navigate = useNavigate();
   
   const filteredLeaveRequests = statusFilter.length === 0 
@@ -38,6 +39,7 @@ const Manage = () => {
   }, [user, navigate]);
 
   const handleFilter = async (e) => {
+    console.log(statusFilter);
     try {
       if (e.target.checked) {
         setStatusFilter([...statusFilter, e.target.value]);
@@ -74,7 +76,7 @@ const Manage = () => {
         </label>
       </div>
     
-    <ReviewLeaveList leaveRequests={filteredLeaveRequests} setLeaveRequests={setLeaveRequests}/>  
+    <ReviewLeaveList leaveRequests={filteredLeaveRequests} setLeaveRequests={setLeaveRequests} editingLeaveRequest={editingLeaveRequest} setEditingLeaveRequest={setEditingLeaveRequest}/>  
     
     </div>
   );
