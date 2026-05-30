@@ -8,6 +8,7 @@ const Admin = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
+  const [editingUser, setEditingUser] = useState(null);
 
   useEffect(() => {
     if (!user || user.role !== "admin") {
@@ -33,7 +34,7 @@ const Admin = () => {
   return (
     <div className="container mx-auto p-6">
       <h1 className="text-3xl font-bold mb-6">All Users</h1>
-      <UserList users={users} />
+      <UserList users={users} setUsers={setUsers} setEditingUser={setEditingUser} />
     </div>
   );
 };
