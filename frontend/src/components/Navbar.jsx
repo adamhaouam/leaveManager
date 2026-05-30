@@ -15,7 +15,7 @@ const Navbar = () => {
       <Link to="/leave" className="text-2xl font-bold">
         Leave Management
       </Link>
-      <div class="*:ml-3 *:px-3 *:py-2 *:rounded-md *:font-medium">
+      <div className="*:ml-3 *:px-3 *:py-2 *:rounded-md *:font-medium">
         {user ? (
           <>
             <Link to="/profile">Profile</Link>

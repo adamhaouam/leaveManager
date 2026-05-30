@@ -99,13 +99,12 @@ const LeaveRequestForm = ({
             setFormData({ ...formData, leaveType: e.target.value })
           }
           className="w-full mb-4 p-2 border rounded"
-          defualtvalue=""
         >
           <option disabled hidden value="">
             Select Leave Type
           </option>
           {LEAVE_TYPES.map((type) => (
-            <option key={type.id} value={type.id}>
+            <option key={type.value} value={type.value}>
               {type.label}
             </option>
           ))}

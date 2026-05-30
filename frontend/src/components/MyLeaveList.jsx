@@ -54,7 +54,7 @@ const MyLeaveList = ({
           )}
 
           <span className="font-semibold justify-self-end">Status:</span>
-          <span class={leaveRequest.status}>
+          <span className={leaveRequest.status}>
             {getStatusLabel(leaveRequest.status)}
           </span>
 
