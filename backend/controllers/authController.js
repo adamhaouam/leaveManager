@@ -65,7 +65,7 @@ const getProfile = async (req, res) => {
   }
 };
 
-const updateUserProfile = async (req, res) => {
+const updateMyProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
     if (!user) return res.status(404).json({ message: "User not found" });
@@ -73,6 +73,33 @@ const updateUserProfile = async (req, res) => {
     const { name, email } = req.body;
     user.name = name || user.name;
     user.email = email || user.email;
+
+    const updatedUser = await user.save();
+    res.json({
+      id: updatedUser.id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      role: updatedUser.role,
+      token: generateToken(updatedUser.id),
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const updateUserProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    const userExists = await User.findOne({ email: req.body.email, _id: { $ne: req.params.id } });
+    if (userExists)
+      return res.status(400).json({ message: "User already exists" });
+
+    const { name, email, role } = req.body;
+    user.name = name || user.name;
+    user.email = email || user.email;
+    user.role = role || user.role;
 
     const updatedUser = await user.save();
     res.json({
@@ -96,10 +123,23 @@ const getUserList = async (req, res) => {
   }
 };
 
+
+const deleteUser = async (req, res) => {
+  try {
+    const user = await User.findByIdAndDelete(req.params.id);
+    if (!user) return res.status(404).json({ message: "User not found" });
+    res.json({ message: "User removed" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
   updateUserProfile,
+  updateMyProfile,
   getProfile,
   getUserList,
+  deleteUser,
 };
