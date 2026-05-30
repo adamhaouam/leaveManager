@@ -29,7 +29,7 @@ const Register = () => {
       alert("Registration successful. Please log in.");
       navigate("/login");
     } catch (error) {
-      if (error.response.status === 400) {
+      if (error?.response?.status === 400) {
         alert("Email already exists. Please use a different email.");
       } else alert("Registration failed. Please try again.");
     }
@@ -65,11 +65,12 @@ const Register = () => {
         />
 
         <select
-          value={formData.role}
+          selected={formData.role}
           onChange={(e) => setFormData({ ...formData, role: e.target.value })}
           className="w-full mb-4 p-2 border rounded"
+          defaultValue=""
         >
-          <option disabled selected hidden value="">
+          <option disabled hidden value="">
             Select User Type
           </option>
           {USER_TYPES.map((type) => (
