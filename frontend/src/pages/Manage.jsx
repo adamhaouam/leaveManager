@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axiosInstance from "../axiosConfig";
 import AllLeaveList from "../components/AllLeaveList";
+import LeaveRequestForm from "../components/LeaveForm";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
@@ -9,6 +10,7 @@ const Manage = () => {
   const [leaveRequests, setLeaveRequests] = useState([]);
   const [statusFilter, setStatusFilter] = useState(["pending", "approved"]);
   const [editingLeaveRequest, setEditingLeaveRequest] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
   const filteredLeaveRequests =
@@ -83,6 +85,16 @@ const Manage = () => {
           Rejected
         </label>
       </div>
+
+    <LeaveRequestForm
+        leaveRequests={leaveRequests}
+        setLeaveRequests={setLeaveRequests}
+        editingLeaveRequest={editingLeaveRequest}
+        setEditingLeaveRequest={setEditingLeaveRequest}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+      />
+
       <AllLeaveList
         leaveRequests={filteredLeaveRequests}
         setLeaveRequests={setLeaveRequests}

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import axiosInstance from "../axiosConfig";
 import { useAuth } from "../context/AuthContext";
 
-const AllLeaveList = ({ leaveRequests }) => {
+const AllLeaveList = ({ leaveRequests, setLeaveRequests, editingLeaveRequest, setEditingLeaveRequest }) => {
   const [userNames, setUserNames] = useState([]);
   const { user } = useAuth();
 
@@ -38,6 +38,22 @@ const AllLeaveList = ({ leaveRequests }) => {
     const status = STATUS_TYPES.find((s) => s.value === statusValue);
     return status ? status.label : statusValue;
   };
+
+const handleDelete = async (leaveRequestId) => {
+    try {
+      await axiosInstance.delete(`/api/leave-requests/${leaveRequestId}`, {
+        headers: { Authorization: `Bearer ${user.token}` },
+      });
+      setLeaveRequests(
+        leaveRequests.filter(
+          (leaveRequest) => leaveRequest._id !== leaveRequestId,
+        ),
+      );
+    } catch (error) {
+      alert("Failed to delete leave request.");
+    }
+  };
+
 
   return (
     <div>
@@ -79,7 +95,29 @@ const AllLeaveList = ({ leaveRequests }) => {
               <p>{leaveRequest.reviewComment}</p>
             </>
           )}
+
+          {user.role === "admin" && (
+            <>
+            <h3 className="font-semibold justify-self-end">Admin:</h3>
+            <div className=" flex gap-2 mt-2">
+              <button
+                  onClick={() => setEditingLeaveRequest(leaveRequest)}
+                  className="mr-2 bg-blue-400 text-white px-4 py-2 rounded"
+              >
+                  Edit
+              </button>
+              <button
+                onClick={() => handleDelete(leaveRequest._id)}
+                className="bg-red-500 text-white px-4 py-2 rounded"
+              >
+                Delete
+              </button>
+              
+            </div>
+            </>
+          )}
         </div>
+        
       ))}
     </div>
   );
