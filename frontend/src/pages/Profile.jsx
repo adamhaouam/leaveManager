@@ -34,7 +34,7 @@ const Profile = () => {
 
     if (user) fetchProfile();
     else navigate("/login"); // Redirect to login if not authenticated
-  }, [user]);
+  }, [user, navigate]);
 
   const getUserLabel = (userRole) => {
     const role = USER_TYPES.find((s) => s.value === userRole);
