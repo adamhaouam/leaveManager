@@ -8,7 +8,11 @@ const {
   getUserList,
   deleteUser,
 } = require("../controllers/authController");
-const { protect, requireAdmin, requireManager } = require("../middleware/authMiddleware");
+const {
+  protect,
+  requireAdmin,
+  requireManager,
+} = require("../middleware/authMiddleware");
 const router = express.Router();
 
 router.post("/register", registerUser);

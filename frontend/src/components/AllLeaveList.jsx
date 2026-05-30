@@ -24,7 +24,9 @@ const AllLeaveList = ({ leaveRequests }) => {
   }, [user]);
 
   const getUserName = (userId) => {
-    return userNames.filter((user) => user._id === userId)[0]?.name || "Unknown User";
+    return (
+      userNames.filter((user) => user._id === userId)[0]?.name || "Unknown User"
+    );
   };
 
   const getLeaveTypeLabel = (leaveTypeValue) => {
@@ -38,37 +40,45 @@ const AllLeaveList = ({ leaveRequests }) => {
   };
 
   return (
-   <div>
+    <div>
       {leaveRequests.map((leaveRequest) => (
         <div
           key={leaveRequest._id}
-          className="bg-white p-4 mb-4 rounded shadow grid items-center gap-1.5 grid-cols-[5rem_1fr] " 
+          className="bg-white p-4 mb-4 rounded shadow grid items-center gap-1.5 grid-cols-[5rem_1fr] "
         >
-          <span className="font-semibold content-end justify-self-end">User:</span>
+          <span className="font-semibold content-end justify-self-end">
+            User:
+          </span>
           <span>{getUserName(leaveRequest.userId)}</span>
 
-          <span className="font-semibold content-end justify-self-end">Type:</span>
+          <span className="font-semibold content-end justify-self-end">
+            Type:
+          </span>
           <span>{getLeaveTypeLabel(leaveRequest.leaveType)}</span>
           {leaveRequest.reason && (
             <>
               <span className="font-semibold justify-self-end">Reason:</span>
               <p>{leaveRequest.reason}</p>
-            </>)}
-          
+            </>
+          )}
+
           <span className="font-semibold justify-self-end">Status:</span>
-          <span class={leaveRequest.status}>{getStatusLabel(leaveRequest.status)}</span>
-          
-          
-          
+          <span class={leaveRequest.status}>
+            {getStatusLabel(leaveRequest.status)}
+          </span>
+
           <span className="font-semibold justify-self-end">Dates:</span>
-          <span><b>{new Date(leaveRequest.startDate).toLocaleDateString()}</b> to{" "}
-            <b>{new Date(leaveRequest.endDate).toLocaleDateString()}</b></span>
+          <span>
+            <b>{new Date(leaveRequest.startDate).toLocaleDateString()}</b> to{" "}
+            <b>{new Date(leaveRequest.endDate).toLocaleDateString()}</b>
+          </span>
 
           {leaveRequest.reviewComment && (
             <>
               <span className="font-semibold justify-self-end">Comment:</span>
               <p>{leaveRequest.reviewComment}</p>
-            </>)}
+            </>
+          )}
         </div>
       ))}
     </div>

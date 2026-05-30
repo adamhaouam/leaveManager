@@ -18,49 +18,30 @@ const Navbar = () => {
       <div class="*:ml-3 *:px-3 *:py-2 *:rounded-md *:font-medium">
         {user ? (
           <>
-            <Link to="/profile" >
-              Profile
-            </Link>
-            <Link to="/leave" >
-              My Leave
-            </Link>
+            <Link to="/profile">Profile</Link>
+            <Link to="/leave">My Leave</Link>
           </>
         ) : (
           <>
             <Link to="/login" className="mr-4">
               Login
             </Link>
-            <Link
-              to="/register"
-              
-            >
-              Register
-            </Link>
+            <Link to="/register">Register</Link>
           </>
         )}
         {user && (user.role === "manager" || user.role === "admin") && (
           <>
-            <Link
-              to="/manage"
-             
-            >
-              View All
-            </Link>
-            <Link
-              to="/pending"
-              
-            >
-              Pending
-            </Link>
+            <Link to="/manage">All Leave</Link>
+            <Link to="/pending">Pending</Link>
           </>
         )}
         {user && user.role === "admin" && (
           <>
             <Link
               to="/admin"
-              className="ml-4 bg-purple-500 px-4 py-2 rounded hover:bg-purple-700"
+              className="ml-4 px-4 py-2 rounded hover:bg-purple-700"
             >
-              Admin
+              Users
             </Link>
           </>
         )}
@@ -68,12 +49,14 @@ const Navbar = () => {
           <>
             <button
               onClick={handleLogout}
-              className="bg-red-500 px-4 py-2 rounded ml-5 hover:bg-red-700"
+              className="bg-red-600 px-4 py-2 rounded ml-5 hover:bg-red-700"
             >
               Logout
             </button>
           </>
-        ) : <></>}
+        ) : (
+          <></>
+        )}
       </div>
     </nav>
   );

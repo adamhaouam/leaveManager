@@ -54,13 +54,13 @@ const LeaveRequests = () => {
   return (
     <div className="container mx-auto p-6">
       <div className="flex justify-between items-center mb-6 ">
-      <h1 className="text-3xl font-bold ">My Leave Requests</h1>
-      <button
-        onClick={() => setIsOpen(true)}
-        className="bg-green-500 text-white text-xl px-8 py-2 rounded"
-      >
-        Add New
-      </button>
+        <h1 className="text-3xl font-bold ">My Leave Requests</h1>
+        <button
+          onClick={() => setIsOpen(true)}
+          className="bg-green-500 text-white text-xl px-8 py-2 rounded"
+        >
+          Add New
+        </button>
       </div>
       <div className="mb-6 flex">
         <h3>Filter by status:</h3>

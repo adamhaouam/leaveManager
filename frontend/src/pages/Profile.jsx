@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import axiosInstance from "../axiosConfig";
+import USER_TYPES from "../constants/userTypes";
 
 const Profile = () => {
   const { user } = useAuth(); // Access user token from context
@@ -32,6 +33,11 @@ const Profile = () => {
     if (user) fetchProfile();
   }, [user]);
 
+  const getUserLabel = (userRole) => {
+    const role = USER_TYPES.find((s) => s.value === userRole);
+    return role ? role.label : userRole;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -53,26 +59,30 @@ const Profile = () => {
 
   return (
     <div className="max-w-md mx-auto mt-20">
-      <form onSubmit={handleSubmit} className="bg-white p-6 shadow-md rounded">
-        <h1 className="text-2xl font-bold mb-4 text-center">Your Profile</h1>
+      <form onSubmit={handleSubmit} className="bg-white p-4 mb-4 rounded shadow grid items-center gap-y-4 gap-x-2 grid-cols-[auto_1fr]">
+        <h1 className="text-2xl col-span-2 font-bold mb-4 text-center">Your Profile</h1>
+        <label className="font-semibold justify-self-end">Name:</label>
         <input
           type="text"
           placeholder="Name"
           value={formData.name}
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          className="w-full mb-4 p-2 border rounded"
+          className="w-full p-2 border rounded"
         />
+        <label className="font-semibold justify-self-end">Email:</label>
         <input
           type="email"
           placeholder="Email"
           value={formData.email}
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-          className="w-full mb-4 p-2 border rounded"
+          className="w-full p-2 border rounded"
         />
-        <h2 className="text-lg font-semibold mb-2">Role: {user.role}</h2>
+        <b className="font-semibold justify-self-end">Role: </b>
+        <span>{getUserLabel(user.role)}</span>
+        
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white p-2 rounded"
+          className="w-full my-2 bg-blue-600 text-white col-span-2 p-2 rounded"
         >
           {loading ? "Updating..." : "Update Profile"}
         </button>
