@@ -13,6 +13,7 @@ const Register = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
+    console.log(formData);
     e.preventDefault();
     try {
       if (
@@ -72,7 +73,7 @@ const Register = () => {
             Select User Type
           </option>
           {USER_TYPES.map((type) => (
-            <option key={type.id} value={type.id}>
+            <option key={type.value} value={type.value}>
               {type.label}
             </option>
           ))}

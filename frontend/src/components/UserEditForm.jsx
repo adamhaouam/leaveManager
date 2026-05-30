@@ -92,7 +92,7 @@ const UserEditForm = ({
             Select Role
           </option>
           {USER_TYPES.map((type) => (
-            <option key={type.id} value={type.id}>
+            <option key={type.value} value={type.value}>
               {type.label}
             </option>
           ))}
