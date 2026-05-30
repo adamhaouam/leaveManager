@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axiosInstance from "../axiosConfig";
-import AllLeaveList from "../components/AllLeaveList";
+import PendingLeaveList from "../components/PendingLeaveList";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
@@ -38,7 +38,7 @@ const Pending = () => {
   return (
     <div className="container mx-auto p-6">
       <h1 className="text-3xl font-bold mb-6">Pending Leave Requests</h1>
-      <AllLeaveList
+      <PendingLeaveList
         leaveRequests={filteredLeaveRequests}
         setLeaveRequests={setLeaveRequests}
         editingLeaveRequest={editingLeaveRequest}
