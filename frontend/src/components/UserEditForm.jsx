@@ -52,7 +52,7 @@ const UserEditForm = ({ editingUser, setEditingUser, users, setUsers, isOpen, se
         setEditingUser(null);
         setIsOpen(false);
     } catch (error) {
-      alert("Error validating form data.");
+      alert(error.response?.data?.message || "Failed to update user.");
       return;
     }
   };
