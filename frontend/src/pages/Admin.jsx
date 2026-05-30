@@ -11,6 +11,7 @@ const Admin = () => {
   const [editingUser, setEditingUser] = useState(null);
 
   useEffect(() => {
+    console.log(editingUser);
     if (!user || user.role !== "admin") {
       alert("You must be an admin to view this page.");
       navigate("/login");
@@ -29,7 +30,7 @@ const Admin = () => {
     };
 
     fetchUserList();
-  }, [user, navigate]);
+  }, [user, navigate, editingUser]);
 
   return (
     <div className="container mx-auto p-6">
