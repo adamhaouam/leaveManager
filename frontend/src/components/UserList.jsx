@@ -1,5 +1,6 @@
 import { useAuth } from "../context/AuthContext";
 import axiosInstance from "../axiosConfig";
+import USER_TYPES from "../constants/userTypes";
 
 const UserList = ({ users, setUsers, setEditingUser }) => {
   const { user } = useAuth();
@@ -15,18 +16,28 @@ const UserList = ({ users, setUsers, setEditingUser }) => {
     }
   };
 
+  const getUserLabel = (userRole) => {
+    const role = USER_TYPES.find((s) => s.value === userRole);
+    return role ? role.label : userRole;
+  };
+
   return (
     <div>
       {users.map((user) => (
-        <div key={user._id} className="bg-white p-4 mb-4 rounded shadow">
-          <h2 className="font-bold">{user.name}</h2>
-          <p>{user.email}</p>
-          <p>{user.role}</p>
+        <div key={user._id} className="bg-white p-4 mb-4 rounded shadow grid items-center gap-1.5 grid-cols-[auto_1fr]">
+          <span className="font-semibold justify-self-end">Name:</span>
+          <span>{user.name}</span>
 
-          <div className="mt-2 flex">
+          <span className="font-semibold justify-self-end">Email:</span>
+          <span>{user.email}</span>
+
+          <span className="font-semibold justify-self-end">Role:</span>
+          <span>{getUserLabel(user.role)}</span>
+
+          <div className="col-span-2 flex gap-2 mt-2">
             <button
               onClick={() => setEditingUser(user)}
-              className="mr-2 bg-blue-400 text-white px-4 py-2 rounded"
+              className="bg-blue-400 text-white px-4 py-2 rounded"
             >
               Edit
             </button>

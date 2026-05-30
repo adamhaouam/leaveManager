@@ -1,7 +1,7 @@
 const USER_TYPES = [
-  { id: "employee", label: "Employee" },
-  { id: "manager", label: "Manager" },
-  { id: "admin", label: "Admin" },
+  { value: "employee", label: "Employee" },
+  { value: "manager", label: "Manager" },
+  { value: "admin", label: "Administrator" },
 ];
 
 export default USER_TYPES;
