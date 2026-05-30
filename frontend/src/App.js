@@ -7,12 +7,16 @@ import Leave from "./pages/Leave";
 import Manage from "./pages/Manage";
 import Pending from "./pages/Pending";
 import Admin from "./pages/Admin";
+import { Navigate } from 'react-router-dom';
+
+
 
 function App() {
   return (
     <Router>
       <Navbar />
       <Routes>
+        <Route path="/" element={<Navigate to="/leave" />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />
