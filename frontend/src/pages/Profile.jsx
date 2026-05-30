@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import axiosInstance from "../axiosConfig";
 import USER_TYPES from "../constants/userTypes";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const { user } = useAuth(); // Access user token from context
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -31,6 +33,7 @@ const Profile = () => {
     };
 
     if (user) fetchProfile();
+    else navigate("/login"); // Redirect to login if not authenticated
   }, [user]);
 
   const getUserLabel = (userRole) => {
@@ -78,7 +81,7 @@ const Profile = () => {
           className="w-full p-2 border rounded"
         />
         <b className="font-semibold justify-self-end">Role: </b>
-        <span>{getUserLabel(user.role)}</span>
+        <span>{getUserLabel(user?.role)}</span>
         
         <button
           type="submit"
