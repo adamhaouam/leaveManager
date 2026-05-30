@@ -92,9 +92,10 @@ const updateUserProfile = async (req, res) => {
     const user = await User.findById(req.params.id);
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    const { name, email } = req.body;
+    const { name, email, role } = req.body;
     user.name = name || user.name;
     user.email = email || user.email;
+    user.role = role || user.role;
 
     const updatedUser = await user.save();
     res.json({
@@ -120,7 +121,6 @@ const getUserList = async (req, res) => {
 
 
 const deleteUser = async (req, res) => {
-  console.log("And now attempting to delete user with ID:", req.params.id);
   try {
     const user = await User.findByIdAndDelete(req.params.id);
     if (!user) return res.status(404).json({ message: "User not found" });
