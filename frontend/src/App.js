@@ -7,9 +7,7 @@ import Leave from "./pages/Leave";
 import Manage from "./pages/Manage";
 import Pending from "./pages/Pending";
 import Admin from "./pages/Admin";
-import { Navigate } from 'react-router-dom';
-
-
+import { Navigate } from "react-router-dom";
 
 function App() {
   return (

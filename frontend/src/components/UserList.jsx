@@ -15,8 +15,6 @@ const UserList = ({ users, setUsers, setEditingUser }) => {
     }
   };
 
-
-
   return (
     <div>
       {users.map((user) => (
@@ -38,7 +36,6 @@ const UserList = ({ users, setUsers, setEditingUser }) => {
             >
               Delete
             </button>
-
           </div>
         </div>
       ))}

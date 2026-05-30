@@ -9,7 +9,6 @@ const ReviewDialog = ({
   setIsOpen,
   leaveRequests,
 }) => {
-
   const { user } = useAuth();
   const [reviewComment, setReviewComment] = useState("");
   const handleReview = async (leaveRequest, newStatus, reviewComment) => {
@@ -38,13 +37,21 @@ const ReviewDialog = ({
   return (
     <dialog open={isOpen}>
       <div className="bg-white p-4 mb-4 rounded shadow grid items-center gap-1.5 grid-cols-[1fr_1fr] ">
-        <h2 className="text-xl font-bold mb-6 col-span-2">Review Leave Request</h2>
+        <h2 className="text-xl font-bold mb-6 col-span-2">
+          Review Leave Request
+        </h2>
         {leaveRequest?.reason && (
-            <>
-              <span className="font-semibold justify-self-end">Reason:</span>
-              <p>{leaveRequest?.reason}</p>
-            </>)}
-        <label className="font-semibold justify-self-end" htmlFor="reviewComment">Comment:</label>
+          <>
+            <span className="font-semibold justify-self-end">Reason:</span>
+            <p>{leaveRequest?.reason}</p>
+          </>
+        )}
+        <label
+          className="font-semibold justify-self-end"
+          htmlFor="reviewComment"
+        >
+          Comment:
+        </label>
         <input
           type="text"
           className="border p-2 rounded"
@@ -56,13 +63,13 @@ const ReviewDialog = ({
       <div className="grid items-center gap-1.5 grid-cols-[1fr_1fr] ">
         <button
           className="mr-2 bg-green-500 text-white p-2 rounded"
-          onClick={() => handleReview(leaveRequest, 'approved', reviewComment)}
+          onClick={() => handleReview(leaveRequest, "approved", reviewComment)}
         >
           Approve
         </button>
         <button
           className="bg-red-500 text-white p-2 rounded"
-          onClick={() => handleReview(leaveRequest, 'rejected', reviewComment)}
+          onClick={() => handleReview(leaveRequest, "rejected", reviewComment)}
         >
           Reject
         </button>
