@@ -13,7 +13,6 @@ const Admin = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    console.log(editingUser);
     if (!user || user.role !== "admin") {
       alert("You must be an admin to view this page.");
       navigate("/login");
@@ -32,7 +31,7 @@ const Admin = () => {
     };
 
     fetchUserList();
-  }, [user, navigate, editingUser]);
+  }, [user, navigate]);
 
   return (
     <div className="container mx-auto p-6">

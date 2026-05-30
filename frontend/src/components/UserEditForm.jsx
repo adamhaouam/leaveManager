@@ -28,13 +28,11 @@ const UserEditForm = ({ editingUser, setEditingUser, users, setUsers, isOpen, se
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitting form with data:", formData); // Debug log
     try {
       if (!formData.name || !formData.email || !formData.role) {
         alert("Please fill in all required fields.");
         return;
       }
-      console.log("editingUser:", editingUser); // Debug log
       const response = await axiosInstance.put(
           `/api/auth/users/${editingUser._id}`,
           formData,
