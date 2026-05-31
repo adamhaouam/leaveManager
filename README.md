@@ -1,8 +1,8 @@
 # Leave Management Website
 
-A leave management full-stack application utilising MERN (MongoDB, Express, React and Node.js) for managing leave request creaation and approval. The appliication includes role-based access for employees, manaagers and administrators, utilising React and Tailwind for a intuitive UI.
+A leave management full-stack application utilising MERN (MongoDB, Express, React and Node.js) for managing leave request creation and approval. The application includes role-based access for employees, managers and administrators, utilising React and Tailwind for an intuitive UI.
 
-This program was creeated for QUT IFFQ636's Assignment 1.
+This program was created for QUT IFFQ636's Assignment 1.
 
 ### Live Example:
 http://52.62.173.70/
@@ -14,7 +14,7 @@ http://52.62.173.70/
 # Features
 
 ### Account Management
-- Secure signup and loginn features
+- Secure signup and login features
 - Role-based access control (Employee, Manager, Admin)
 - Profile management
 
