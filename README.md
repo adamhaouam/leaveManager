@@ -127,7 +127,7 @@ npm test
 ### Project Links
 
 - **JIRA Board:** https://adamhaouam.atlassian.net/jira/software/projects/SCRUM/boards/34?atlOrigin=eyJpIjoiOGM4ZGI3YWRjYzZlNDE4ZWJkMjMzNDUzMDllZGI5M2EiLCJwIjoiaiJ9
-- **Figma Design:** https://www.figma.com/proto/dwNQ3oDz1EFA6wKfrjabPN/Untitled?node-id=0-1&t=tLVYIjxxoTFYqIK9-1
+- **Figma Design:** https://www.figma.com/design/dwNQ3oDz1EFA6wKfrjabPN/Leave-Management?node-id=0-1&t=nqGMG2WNcZ8FRcLl-1
 - **Public URL (EC2):** http://52.62.173.70/
 
 ### Example Credentials
